@@ -1,8 +1,12 @@
 class Canvas {
     
    constructor(idOfCanvas){
-        this.canvas = document.getElementById(idOfCanvas);
-        this.ctx = this.canvas.getContext("2d");
+        this.canvasElement = document.getElementById(idOfCanvas);
+        this.ctx = this.canvasElement.getContext("2d");
+        this.elements = [];
+
+
+        this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
    }
 
    drawGreenSquare(){
@@ -11,73 +15,92 @@ class Canvas {
    }
 
    drawImageToCanvas(image){
-        this.ctx.drawImage(image, 0, 0);
+        var width, height, aspectRatio;
+        var [centreX, centreY] = [this.canvasElement.width/2, this.canvasElement.height/2];
+
+        //Keep the aspect ratio, but scale down so that it fits within canvas.
+        //the centre of the image should be the centre of the canvas.
+        aspectRatio = image.width / image.height;
+        if ( image.width > this.canvasElement.width/2 ) {
+            width = this.canvasElement.width/2;
+        }
+        else {
+            width = image.width;
+        }
+        height = aspectRatio * width;
+
+        this.ctx.drawImage(image, centreX, centreY);
+        // this.elements.push(new CanvasElement(0, ))
+   }
+
+   canvasClickHandler(ev){
+    console.log(ev);
    }
 
 }
 
 class ImageHandler {
 
-    constructor(idOfUploadInputElement){
+    constructor(idOfUploadInputElement, canvas){
         this.element = document.getElementById(idOfUploadInputElement);
-        this.element.addEventListener('change', this.handleChangeEvent.bind(this), false);
+        this.element.addEventListener('change', this.handleImageChangeEvent.bind(this), false);
+        this.canvas = canvas;
     }
 
-    handleChangeEvent(ev){
-        console.log(ev);
-
-        if ( ev.target.files && ev.target.files[0] ){
+    readFileAsync(file){
+        return new Promise((resolve, reject) => {  
             this.fileReader = new FileReader();
-
-            //todo - convert to es6 promises.
-            // FR.onload = function(fileReadEvent){
+            this.img = new Image();
             this.fileReader.onload = fileReadEvent => {
                 this.img = new Image();
                 this.img.src = fileReadEvent.target.result;
-
-                // img.onload = function(){
-                //     return;
-                // }
-
+                resolve(this.img);
             }
-            this.fileReader.readAsDataURL( ev.target.files[0] );
-        }
+            this.fileReader.readAsDataURL( file );
+        });
     }
+
+    handleImageChangeEvent(ev){
+        return new Promise((resolve, reject) => {
+
+            if ( ev.target.files && ev.target.files[0] ){
+                this.readFileAsync(ev.target.files[0]).then( (data) => {
+                    this.canvas.drawImageToCanvas(data)
+                });
+            }
+            else {
+                reject( Error('No file found, nothing to read.') );
+            }
+
+        });
+
+    }
+
+
+
 
     getImage(){
         return this.img ? this.img : false;
     }
-
-    //     if (this.files && this.files[0]) {
-    //         var FR = new FileReader();
-    //         FR.onload = function(e) {
-    //            var img = new Image();
-
-    //            img.onload = function() {
-    //              context.drawImage(img, 0, 0);
-    //            };
-
-    //            img.src = e.target.result;
-    //         };       
-    //         FR.readAsDataURL( this.files[0] );
-    //     }
-    // }
-
-
-    // function handleImage(e){
-    //     var reader = new FileReader();
-    //     reader.onload = function(event){
-    //         var img = new Image();
-    //         img.onload = function(){
-    //             canvas.width = img.width;
-    //             canvas.height = img.height;
-    //             ctx.drawImage(img,0,0);
-    //         }
-    //         img.src = event.target.result;
-    //     }
-    //     reader.readAsDataURL(e.target.files[0]);     
-    // }
     
+
+}
+
+//The Canvas class is for the whole canvas, whereas this is for the individual elemenets drawn on the canvas.
+class CanvasElement{
+    constructor(canvas, width, height, top, left){
+        this.width = width;
+        this.height = height;
+        this.top =  top;
+        this.left =  left;
+
+        this.selectionHandles = [0, 1, 2, 3, 4, 5, 6, 7];
+    }
+
+    draw(){
+
+    }
+
 
 }
 
@@ -86,7 +109,7 @@ class ImageHandler {
 var image, c;
 document.addEventListener("DOMContentLoaded", function(event) { 
     c = new Canvas('canvas');
-    image = new ImageHandler('imageUpload')
+    image = new ImageHandler('imageUpload', c);
     //c.drawImageToCanvas(image.getImage() )
 });
 
