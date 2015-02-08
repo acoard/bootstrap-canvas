@@ -4,7 +4,12 @@ class Canvas {
         this.canvasElement = document.getElementById(idOfCanvas);
         this.ctx = this.canvasElement.getContext("2d");
         this.elements = [];
+        this.canvasValid = true;
 
+        for (var i = 0; i < 8; i ++) {
+          var rect = new Box;
+          selectionHandles.push(rect);
+        }
 
         this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
    }
@@ -36,6 +41,25 @@ class Canvas {
    canvasClickHandler(ev){
     console.log(ev);
    }
+
+   clear(ctx){
+
+   }
+
+   mainDraw() {
+     if (this.canvasValid == false) {
+       this.clear(ctx);
+       
+       // draw all boxes
+       var l = boxes.length;
+       for (var i = 0; i < l; i++) {
+         boxes[i].draw(ctx); // we used to call drawshape, but now each box draws itself
+       }
+       
+       this.canvasValid = true;
+     }
+   }
+
 
 }
 
@@ -87,6 +111,7 @@ class ImageHandler {
 }
 
 //The Canvas class is for the whole canvas, whereas this is for the individual elemenets drawn on the canvas.
+//These are draggable/rotatable objects
 class CanvasElement{
     constructor(canvas, width, height, top, left){
         this.width = width;
@@ -94,16 +119,26 @@ class CanvasElement{
         this.top =  top;
         this.left =  left;
 
-        this.selectionHandles = [0, 1, 2, 3, 4, 5, 6, 7];
+        // this.selectionHandles = [0, 1, 2, 3, 4, 5, 6, 7];
     }
 
-    draw(){
+    draw(context){
 
     }
 
 
 }
 
+//todo  - rename to Selection box
+class Box{
+    constructor(){
+        this.mySelBoxColor = 'darkred';
+        this.mySelBoxSize = 6;
+    }
+    draw (context, optionalColor) {
+       // ... (draw code) ...
+     }
+}
 
 
 var image, c;
