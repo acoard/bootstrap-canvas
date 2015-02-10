@@ -24,13 +24,13 @@ class Canvas {
         //rewrite with this.fabric
         var canvas = this.fabric;
         var fabricImage = new fabric.Image(imageHandler.img);
+        this.elements.push(fabricImage);
 
-        var defaultWidth, defaultHeight = this.calculateDrawingDefaultDimensions(imageHandler.img);
-        // debugger;
-        // [fabricImage.width, fabricImage.height] = [defaultWidth, defaultHeight];
-        // debugger;
+        var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
+        [fabricImage.width, fabricImage.height] = [defaultWidth, defaultHeight];
 
         canvas.add(fabricImage);
+        fabricImage.center();
    }
 
    calculateDeadCenterPlacement(image){
@@ -101,6 +101,7 @@ class ImageHandler {
 
             if ( ev.target.files && ev.target.files[0] ){
                 this.readFileAsync(ev.target.files[0]).then( (data) => {
+                    this.name = ev.target.files[0].name;
                     this.canvas.drawImageToCanvas(this)
                 });
             }
@@ -161,7 +162,10 @@ class UIController{
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default">Right</button>
               </div>
-            </div>`;
+            </div>
+            <ul id="imagesListTemplate" class="list-group">
+            </ul>`;
+
 
         this.initControls().then(() => {
           image = new ImageHandler('imageUpload', c);
@@ -176,6 +180,15 @@ class UIController{
         this.target.innerHTML = this.template;
         resolve();
       })
+      
+    }
+
+    drawImagesList(imagesList){
+      var output = [];
+      // var li = `<li class="list-group-item">${  }</li>`
+      // imagesList.forEach(function(el){
+
+      // });
       
     }
 
