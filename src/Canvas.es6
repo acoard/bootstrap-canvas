@@ -1,9 +1,15 @@
+
+
 class Canvas {
     
    constructor(idOfCanvas){
         this.canvasElement = document.getElementById(idOfCanvas);
         this.ctx = this.canvasElement.getContext("2d");
         this.elements = [];
+        this.width = this.canvasElement.width;
+        this.height = this.canvasElement.height;
+
+        this.fabric = new fabric.Canvas(idOfCanvas);
 
 
         this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
@@ -14,24 +20,52 @@ class Canvas {
         this.ctx.fillRect(10, 10, 100, 100);
    }
 
-   drawImageToCanvas(image){
-        var width, height, aspectRatio;
-        var [centreX, centreY] = [this.canvasElement.width/2, this.canvasElement.height/2];
+   drawImageToCanvas(imageHandler){
+        //rewrite with this.fabric
+        var canvas = this.fabric;
+        var fabricImage = new fabric.Image(imageHandler.img);
 
-        //Keep the aspect ratio, but scale down so that it fits within canvas.
-        //the centre of the image should be the centre of the canvas.
-        aspectRatio = image.width / image.height;
-        if ( image.width > this.canvasElement.width/2 ) {
-            width = this.canvasElement.width/2;
-        }
-        else {
-            width = image.width;
-        }
-        height = aspectRatio * width;
+        var defaultWidth, defaultHeight = this.calculateDrawingDefaultDimensions(imageHandler.img);
+        // debugger;
+        // [fabricImage.width, fabricImage.height] = [defaultWidth, defaultHeight];
+        // debugger;
 
-        this.ctx.drawImage(image, centreX, centreY);
-        // this.elements.push(new CanvasElement(0, ))
+        canvas.add(fabricImage);
    }
+
+   calculateDeadCenterPlacement(image){
+    //returns x, y, for an image.  
+    //the centre of the image will be the centre of the canvas.
+    //
+    //so, set
+   }
+
+
+   calculateDrawingDefaultDimensions(image){
+    //@todo - make sure the image is centred, in the middle, and is 50% width or height (whichever is higher) of total.
+    // var imgWidth = this.img.width;
+    // var imgHeight = this.img.height;
+    var imgWidth = image.width;
+    var imgHeight = image.height;
+    var aspectRatio = imgWidth / imgHeight;
+    var longerDimension = imgWidth > imgHeight ? imgWidth : imgHeight;
+    // var maxImageSizePercentage = 50;
+
+    if (imgWidth <= canvas.width / 2 && imgHeight <= canvas.height / 2){
+     // return {width: imgWidth, height: imgHeight};
+       return [imgWidth, imgHeight]
+    }
+
+    //just height first
+    if (imgHeight > canvas.height / 2){
+     imgHeight = canvas.height / 2;
+     imgWidth = imgHeight * aspectRatio;
+    }
+
+   // return {width: imgWidth, height: imgHeight};
+     return [imgWidth, imgHeight]
+   }
+
 
    canvasClickHandler(ev){
     console.log(ev);
@@ -39,6 +73,8 @@ class Canvas {
 
 }
 
+
+//@todo - refactor so that imageHandler and imageElementUploadHandler are different objects
 class ImageHandler {
 
     constructor(idOfUploadInputElement, canvas){
@@ -65,7 +101,7 @@ class ImageHandler {
 
             if ( ev.target.files && ev.target.files[0] ){
                 this.readFileAsync(ev.target.files[0]).then( (data) => {
-                    this.canvas.drawImageToCanvas(data)
+                    this.canvas.drawImageToCanvas(this)
                 });
             }
             else {
@@ -104,12 +140,58 @@ class CanvasElement{
 
 }
 
+class UIController{
+    constructor(options){
+        //options should include: 
+        //  which view to load (@todo is there a es6 template import from file?)
+        //  target, i.e. how it selects the element (just use jquery?)
+            //RIGHT NOW: it's selecting by data-canvascontrolstargetid
+        this.target = $('div[data-canvascontrolstargetid]')[0];
+        this.template = `
+            <label class='imageUploadLabel btn btn-primary'> ye upload
+              <input type='file' id='imageUpload' style='visibility: hidden' />
+            </label>
+            <div class="btn-group" role="group" aria-label="...">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default">Left</button>
+              </div>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default">Middle</button>
+              </div>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default">Right</button>
+              </div>
+            </div>`;
+
+        this.initControls().then(() => {
+          image = new ImageHandler('imageUpload', c);
+        });
+        //debug - image is a global variable.
+        //image = new ImageHandler('imageUpload', c);
+    }
+
+    initControls(){
+      // $(this.target).html(this.template);
+      return new Promise((resolve) => {
+        this.target.innerHTML = this.template;
+        resolve();
+      })
+      
+    }
 
 
-var image, c;
+
+
+
+
+}
+
+
+var image, c, ui;
 document.addEventListener("DOMContentLoaded", function(event) { 
     c = new Canvas('canvas');
-    image = new ImageHandler('imageUpload', c);
+    ui = new UIController({});
+    
     //c.drawImageToCanvas(image.getImage() )
 });
 
