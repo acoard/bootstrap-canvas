@@ -28,11 +28,10 @@ class Canvas {
         var fabricImage = new fabric.Image(imageHandler.img);
         this.elements.push(imageHandler);
         ui.drawImagesList(this.elements)
-        debugger;
-
+        
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
         [fabricImage.width, fabricImage.height] = [defaultWidth, defaultHeight];
-
+        // debugger;
         canvas.add(fabricImage);
         fabricImage.center();
    }
@@ -79,7 +78,7 @@ class Canvas {
 
 
 //@todo - refactor so that imageHandler and imageElementUploadHandler are different objects
-class ImageHandler {
+class ImageElementHandler {
 
     constructor(idOfUploadInputElement, canvas){
         this.element = document.getElementById(idOfUploadInputElement);
@@ -105,8 +104,9 @@ class ImageHandler {
 
             if ( ev.target.files && ev.target.files[0] ){
                 this.readFileAsync(ev.target.files[0]).then( (data) => {
-                    this.name = ev.target.files[0].name;
-                    this.canvas.drawImageToCanvas(this)
+                    var name = ev.target.files[0].name;
+                    var img = new ImageHandler(this, data, name);
+                    this.canvas.drawImageToCanvas(img)
                     // resolve();
                 });
             }
@@ -126,6 +126,14 @@ class ImageHandler {
     }
     
 
+}
+
+class ImageHandler{
+  constructor(imageElementHandler, file, name ){
+    this.name = name;
+    this.img = file;
+    this.imageElementHandler = imageElementHandler;
+  }
 }
 
 //The Canvas class is for the whole canvas, whereas this is for the individual elemenets drawn on the canvas.
@@ -173,7 +181,7 @@ class UIController{
 
 
         this.initControls().then(() => {
-          image = new ImageHandler('imageUpload', c);
+          image = new ImageElementHandler('imageUpload', c);
         });
         //debug - image is a global variable.
         //image = new ImageHandler('imageUpload', c);
@@ -192,7 +200,6 @@ class UIController{
       var output = '';
       var element = document.getElementById(imagesListTemplateID);
       imagesList.forEach(function(el){
-        debugger;
         let li = `<li class="list-group-item">${ el.name }</li>`;
         output += li + "\n";
       });
