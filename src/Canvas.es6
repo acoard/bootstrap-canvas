@@ -20,11 +20,15 @@ class Canvas {
         this.ctx.fillRect(10, 10, 100, 100);
    }
 
+  //todo - rename to "import"
+  //extend to a 'try catch', and revert adding it to elements if it doesn't work.
    drawImageToCanvas(imageHandler){
         //rewrite with this.fabric
         var canvas = this.fabric;
         var fabricImage = new fabric.Image(imageHandler.img);
-        this.elements.push(fabricImage);
+        this.elements.push(imageHandler);
+        ui.drawImagesList(this.elements)
+        debugger;
 
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
         [fabricImage.width, fabricImage.height] = [defaultWidth, defaultHeight];
@@ -103,6 +107,7 @@ class ImageHandler {
                 this.readFileAsync(ev.target.files[0]).then( (data) => {
                     this.name = ev.target.files[0].name;
                     this.canvas.drawImageToCanvas(this)
+                    // resolve();
                 });
             }
             else {
@@ -183,12 +188,17 @@ class UIController{
       
     }
 
-    drawImagesList(imagesList){
-      var output = [];
-      // var li = `<li class="list-group-item">${  }</li>`
-      // imagesList.forEach(function(el){
+    drawImagesList(imagesList, imagesListTemplateID = 'imagesListTemplate'){
+      var output = '';
+      var element = document.getElementById(imagesListTemplateID);
+      imagesList.forEach(function(el){
+        debugger;
+        let li = `<li class="list-group-item">${ el.name }</li>`;
+        output += li + "\n";
+      });
+      element.innerHTML = output;
 
-      // });
+      
       
     }
 
