@@ -24,8 +24,7 @@ class Canvas {
         this.ctx.fillRect(10, 10, 100, 100);
    }
 
-  //todo - rename to "import"
-  //extend to a 'try/catch', and revert adding it to elements if it doesn't work.
+  //@todo / refactor - extend to a 'try/catch', and revert adding it to elements if it doesn't work.
    importImageToCanvas(imageHandler){
         var canvas = this.fabric;
         this.elements.push(imageHandler);
@@ -33,43 +32,35 @@ class Canvas {
         
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
         [imageHandler.fabric.width, imageHandler.fabric.height] = [defaultWidth, defaultHeight];
-        // debugger;
         canvas.add(imageHandler.fabric);
         imageHandler.fabric.center();
         imageHandler.fabric.setCoords();
         
    }
 
-   calculateDeadCenterPlacement(image){
-    //returns x, y, for an image.  
-    //the centre of the image will be the centre of the canvas.
-    //
-    //so, set
-   }
-
-
    calculateDrawingDefaultDimensions(image){
-    //@todo - make sure the image is centred, in the middle, and is 50% width or height (whichever is higher) of total.
-    // var imgWidth = this.img.width;
-    // var imgHeight = this.img.height;
     var imgWidth = image.width;
     var imgHeight = image.height;
     var aspectRatio = imgWidth / imgHeight;
-    var longerDimension = imgWidth > imgHeight ? imgWidth : imgHeight;
-    // var maxImageSizePercentage = 50;
 
     if (imgWidth <= canvas.width / 2 && imgHeight <= canvas.height / 2){
      // return {width: imgWidth, height: imgHeight};
        return [imgWidth, imgHeight]
     }
 
-    //just height first
+    //just calculating off height now.
+    //should do another check for width and scale on aspect ratio!
     if (imgHeight > canvas.height / 2){
      imgHeight = canvas.height / 2;
      imgWidth = imgHeight * aspectRatio;
     }
+    //we want to filter by height first, and only catch cases were width is STILL too long
+    if (imgWidth > canvas.width / 2){
+      imgWidth = canvas.width / 2;
+      imgHeight = imgWidth * aspectRatio;
+    }
 
-   // return {width: imgWidth, height: imgHeight};
+
      return [imgWidth, imgHeight]
    }
 
