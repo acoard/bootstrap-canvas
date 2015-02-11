@@ -11,8 +11,6 @@ class Canvas {
         this.fabric = new fabric.Canvas(idOfCanvas);
         
         this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
-
-        // this.render();
    }
 
    render(){
@@ -28,11 +26,8 @@ class Canvas {
 
   //todo - rename to "import"
   //extend to a 'try/catch', and revert adding it to elements if it doesn't work.
-   drawImageToCanvas(imageHandler){
-        //rewrite with this.fabric
+   importImageToCanvas(imageHandler){
         var canvas = this.fabric;
-        // var fabricImage = new fabric.Image(imageHandler.img); ac
-        // imageHandler.fabricImage = fabricImage; //@todo - get this monstrosity out of here.
         this.elements.push(imageHandler);
         ui.drawImagesList(this.elements)
         
@@ -115,7 +110,7 @@ class ImageElementHandler {
                 this.readFileAsync(ev.target.files[0]).then( (data) => {
                     var name = ev.target.files[0].name;
                     var img = new ImageHandler(this, data, name, this.canvas);
-                    this.canvas.drawImageToCanvas(img)
+                    this.canvas.importImageToCanvas(img)
                     // resolve();
                 });
             }
@@ -232,6 +227,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     c = new Canvas('canvas');
     ui = new UIController({canvas: c});
     
-    //c.drawImageToCanvas(image.getImage() )
+    //c.importImageToCanvas(image.getImage() )
 });
 
