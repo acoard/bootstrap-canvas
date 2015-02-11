@@ -143,6 +143,10 @@ class ImageHandler{
     this.img = file;
     this.imageElementHandler = imageElementHandler;
   }
+
+  remove(){
+    this.img 
+  }
 }
 
 //The Canvas class is for the whole canvas, whereas this is for the individual elemenets drawn on the canvas.
@@ -187,6 +191,7 @@ class UIController{
             </div>
             <ul id="imagesListTemplate" class="list-group">
             </ul>`;
+          this.canvas = options.canvas;
 
 
         this.initControls().then(() => {
@@ -199,7 +204,15 @@ class UIController{
     initControls(){
       // $(this.target).html(this.template);
       return new Promise((resolve) => {
+        var $target = $(this.target);
         this.target.innerHTML = this.template;
+        $target.on('click', '#imagesListTemplate', (ev) => {
+          if (ev.target.nodeName === "I"){
+            this.requestImageDeletionFromUI(ev.target);
+          }
+
+        });
+
         resolve();
       })
       
@@ -208,14 +221,16 @@ class UIController{
     drawImagesList(imagesList, imagesListTemplateID = 'imagesListTemplate'){
       var output = '';
       var element = document.getElementById(imagesListTemplateID);
-      imagesList.forEach(function(el){
-        let li = `<li class="list-group-item">${ el.name }</li>`;
+      imagesList.forEach(function(el, i){
+        let li = `<li class="list-group-item" data-index=${i}>${ el.name } <i class='close'>X</i> </li>`;
         output += li + "\n";
       });
-      element.innerHTML = output;
+      element.innerHTML = output;      
+    }
 
-      
-      
+    requestImageDeletionFromUI(eventTarget){
+      var index = eventTarget['parentElement']['dataset']['index'];
+      debugger;
     }
 
 
@@ -229,7 +244,7 @@ class UIController{
 var image, c, ui;
 document.addEventListener("DOMContentLoaded", function(event) { 
     c = new Canvas('canvas');
-    ui = new UIController({});
+    ui = new UIController({canvas: c});
     
     //c.drawImageToCanvas(image.getImage() )
 });
