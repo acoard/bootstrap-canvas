@@ -146,7 +146,8 @@ class ImageHandler{
   }
 
   remove(){
-    this.img 
+    //@todo - REMOVE FROM ELEMENTS ARRAY
+    this.fabric.remove();
   }
 }
 
@@ -231,7 +232,7 @@ class UIController{
 
     requestImageDeletionFromUI(eventTarget){
       var index = eventTarget['parentElement']['dataset']['index'];
-      debugger;
+      this.canvas.elements[index].remove()
     }
 
 
