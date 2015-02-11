@@ -31,17 +31,17 @@ class Canvas {
    drawImageToCanvas(imageHandler){
         //rewrite with this.fabric
         var canvas = this.fabric;
-        var fabricImage = new fabric.Image(imageHandler.img);
-        imageHandler.fabricImage = fabricImage; //@todo - get this monstrosity out of here.
+        // var fabricImage = new fabric.Image(imageHandler.img); ac
+        // imageHandler.fabricImage = fabricImage; //@todo - get this monstrosity out of here.
         this.elements.push(imageHandler);
         ui.drawImagesList(this.elements)
         
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
-        [fabricImage.width, fabricImage.height] = [defaultWidth, defaultHeight];
+        [imageHandler.fabric.width, imageHandler.fabric.height] = [defaultWidth, defaultHeight];
         // debugger;
-        canvas.add(fabricImage);
-        fabricImage.center();
-        fabricImage.setCoords();
+        canvas.add(imageHandler.fabric);
+        imageHandler.fabric.center();
+        imageHandler.fabric.setCoords();
         
    }
 
@@ -141,6 +141,7 @@ class ImageHandler{
   constructor(imageElementHandler, file, name ){
     this.name = name;
     this.img = file;
+    this.fabric = new fabric.Image(this.img);
     this.imageElementHandler = imageElementHandler;
   }
 
