@@ -8,11 +8,17 @@ class Canvas {
         this.elements = [];
         this.width = this.canvasElement.width;
         this.height = this.canvasElement.height;
-
         this.fabric = new fabric.Canvas(idOfCanvas);
-
-
+        
         this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
+
+        // this.render();
+   }
+
+   render(){
+    this.fabric.setHeight(this.height);
+    this.fabric.setWidth(this.width);
+    this.fabric.renderAll();
    }
 
    drawGreenSquare(){
@@ -21,11 +27,12 @@ class Canvas {
    }
 
   //todo - rename to "import"
-  //extend to a 'try catch', and revert adding it to elements if it doesn't work.
+  //extend to a 'try/catch', and revert adding it to elements if it doesn't work.
    drawImageToCanvas(imageHandler){
         //rewrite with this.fabric
         var canvas = this.fabric;
         var fabricImage = new fabric.Image(imageHandler.img);
+        imageHandler.fabricImage = fabricImage; //@todo - get this monstrosity out of here.
         this.elements.push(imageHandler);
         ui.drawImagesList(this.elements)
         
@@ -34,6 +41,8 @@ class Canvas {
         // debugger;
         canvas.add(fabricImage);
         fabricImage.center();
+        fabricImage.setCoords();
+        
    }
 
    calculateDeadCenterPlacement(image){
