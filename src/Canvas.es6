@@ -114,7 +114,7 @@ class ImageElementHandler {
             if ( ev.target.files && ev.target.files[0] ){
                 this.readFileAsync(ev.target.files[0]).then( (data) => {
                     var name = ev.target.files[0].name;
-                    var img = new ImageHandler(this, data, name);
+                    var img = new ImageHandler(this, data, name, this.canvas);
                     this.canvas.drawImageToCanvas(img)
                     // resolve();
                 });
@@ -138,36 +138,21 @@ class ImageElementHandler {
 }
 
 class ImageHandler{
-  constructor(imageElementHandler, file, name ){
+  constructor(imageElementHandler, file, name, canvas ){
     this.name = name;
     this.img = file;
-    this.fabric = new fabric.Image(this.img);
     this.imageElementHandler = imageElementHandler;
+    this.canvas = canvas;
+
+    this.fabric = new fabric.Image(this.img);
   }
 
-  remove(){
-    //@todo - REMOVE FROM ELEMENTS ARRAY
-    this.fabric.remove();
+  toggleVisibility(){
+    this.fabric.visible = !this.fabric.visible;
+    this.canvas.render();
   }
 }
 
-//The Canvas class is for the whole canvas, whereas this is for the individual elemenets drawn on the canvas.
-class CanvasElement{
-    constructor(canvas, width, height, top, left){
-        this.width = width;
-        this.height = height;
-        this.top =  top;
-        this.left =  left;
-
-        this.selectionHandles = [0, 1, 2, 3, 4, 5, 6, 7];
-    }
-
-    draw(){
-
-    }
-
-
-}
 
 class UIController{
     constructor(options){
@@ -177,9 +162,10 @@ class UIController{
             //RIGHT NOW: it's selecting by data-canvascontrolstargetid
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.template = `
-            <label class='imageUploadLabel btn btn-primary'> ye upload
+            <label class='imageUploadLabel btn btn-primary'> Upload Image
               <input type='file' id='imageUpload' style='visibility: hidden' />
             </label>
+            <!-- 
             <div class="btn-group" role="group" aria-label="...">
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default">Left</button>
@@ -190,6 +176,7 @@ class UIController{
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default">Right</button>
               </div>
+              -->
             </div>
             <ul id="imagesListTemplate" class="list-group">
             </ul>`;
@@ -199,18 +186,15 @@ class UIController{
         this.initControls().then(() => {
           image = new ImageElementHandler('imageUpload', c);
         });
-        //debug - image is a global variable.
-        //image = new ImageHandler('imageUpload', c);
     }
 
     initControls(){
-      // $(this.target).html(this.template);
       return new Promise((resolve) => {
         var $target = $(this.target);
         this.target.innerHTML = this.template;
         $target.on('click', '#imagesListTemplate', (ev) => {
           if (ev.target.nodeName === "I"){
-            this.requestImageDeletionFromUI(ev.target);
+            this.toggleImageVisibility(ev.target);
           }
 
         });
@@ -224,15 +208,15 @@ class UIController{
       var output = '';
       var element = document.getElementById(imagesListTemplateID);
       imagesList.forEach(function(el, i){
-        let li = `<li class="list-group-item" data-index=${i}>${ el.name } <i class='close'>X</i> </li>`;
+        let li = `<li class="list-group-item" data-index=${i}>${ el.name } <i class='close'>toggle</i> </li>`;
         output += li + "\n";
       });
       element.innerHTML = output;      
     }
 
-    requestImageDeletionFromUI(eventTarget){
+    toggleImageVisibility(eventTarget){
       var index = eventTarget['parentElement']['dataset']['index'];
-      this.canvas.elements[index].remove()
+      this.canvas.elements[index].toggleVisibility()
     }
 
 
