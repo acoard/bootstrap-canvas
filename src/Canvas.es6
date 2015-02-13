@@ -60,10 +60,8 @@ class Canvas {
       imgHeight = imgWidth * aspectRatio;
     }
 
-
      return [imgWidth, imgHeight]
    }
-
 
    canvasClickHandler(ev){
     console.log(ev);
@@ -71,8 +69,6 @@ class Canvas {
 
 }
 
-
-//@todo - refactor so that imageHandler and imageElementUploadHandler are different objects
 class ImageElementHandler {
 
     constructor(idOfUploadInputElement, canvas){
@@ -113,9 +109,6 @@ class ImageElementHandler {
 
     }
 
-
-
-
     getImage(){
         return this.img ? this.img : false;
     }
@@ -137,8 +130,14 @@ class ImageHandler{
     this.fabric.visible = !this.fabric.visible;
     this.canvas.render();
   }
+
+  setZIndex(index){
+    this.fabric.moveTo(index);
+  }
 }
 
+
+//todo - inheirit other UI elements from this class, i.e. the 'list' - ListController
 
 class UIController{
     constructor(options){
@@ -178,6 +177,9 @@ class UIController{
       return new Promise((resolve) => {
         var $target = $(this.target);
         this.target.innerHTML = this.template;
+        $target.width(this.canvas.width);
+        
+
         $target.on('click', '#imagesListTemplate', (ev) => {
           if (ev.target.nodeName === "I"){
             this.toggleImageVisibility(ev.target);
@@ -194,7 +196,7 @@ class UIController{
       var output = '';
       var element = document.getElementById(imagesListTemplateID);
       imagesList.forEach(function(el, i){
-        let li = `<li class="list-group-item" data-index=${i}>${ el.name } <i class='close'>toggle</i> </li>`;
+        let li = `<li class="list-group-item" draggable="true" data-index=${i}>${ el.name } <i class='close'>toggle</i> </li>`;
         output += li + "\n";
       });
       element.innerHTML = output;      
