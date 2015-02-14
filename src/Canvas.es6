@@ -166,6 +166,7 @@ class UIController{
             <ul id="imagesListTemplate" class="list-group">
             </ul>`;
           this.canvas = options.canvas;
+          this.$imagesList = $('#imagesListTemplate');
 
 
         this.initControls().then(() => {
@@ -188,10 +189,13 @@ class UIController{
 
         });
 
-        $('#imagesListTemplate').sortable().bind('sortupdate', function(ev) {
-            //Triggered when the user stopped sorting and the DOM position has changed.
-            debugger
-        });
+        this.$imagesList.sortable().bind('sortupdate', _handleImageListReorganization);
+        //     //Triggered when the user stopped sorting and the DOM position has changed.
+        //     debugger
+
+
+        // });
+
 
 
         // let listElementsSelector = '.list-group-item';
@@ -203,6 +207,13 @@ class UIController{
         resolve();
       })
       
+    }
+
+    _handleImageListReorganization(){
+      debugger;
+      this.$imagesList
+
+
     }
 
     drawImagesList(imagesList, imagesListTemplateID = 'imagesListTemplate'){
