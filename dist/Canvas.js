@@ -211,7 +211,6 @@ var UIController = (function () {
     this.target = $("div[data-canvascontrolstargetid]")[0];
     this.template = "\n            <label class='imageUploadLabel btn btn-primary'> Upload Image\n              <input type='file' id='imageUpload' style='visibility: hidden' />\n            </label>\n            <!-- \n            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n              <div class=\"btn-group\" role=\"group\">\n                <button type=\"button\" class=\"btn btn-default\">Left</button>\n              </div>\n              <div class=\"btn-group\" role=\"group\">\n                <button type=\"button\" class=\"btn btn-default\">Middle</button>\n              </div>\n              <div class=\"btn-group\" role=\"group\">\n                <button type=\"button\" class=\"btn btn-default\">Right</button>\n              </div>\n              -->\n            </div>\n            <ul id=\"imagesListTemplate\" class=\"list-group\">\n            </ul>";
     this.canvas = options.canvas;
-    this.$imagesList = $("#imagesListTemplate");
 
 
     this.initControls().then(function () {
@@ -227,6 +226,7 @@ var UIController = (function () {
           var $target = $(_this.target);
           _this.target.innerHTML = _this.template;
           $target.width(_this.canvas.width);
+          _this.$imagesList = $("#imagesListTemplate");
 
 
           $target.on("click", "#imagesListTemplate", function (ev) {
@@ -235,15 +235,6 @@ var UIController = (function () {
               return resolve();
             }
           });
-
-          _this.$imagesList.sortable().bind("sortupdate", _handleImageListReorganization);
-          //     //Triggered when the user stopped sorting and the DOM position has changed.
-          //     debugger
-
-
-          // });
-
-
 
           // let listElementsSelector = '.list-group-item';
 
@@ -259,9 +250,41 @@ var UIController = (function () {
     },
     _handleImageListReorganization: {
       value: function _handleImageListReorganization() {
-        debugger;
-        this.$imagesList;
+        var list = $("#imagesListTemplate");
+        var listOfOriginalIndices = list.find("li").map(function (i, e) {
+          return e.dataset.index;
+        });
+      },
+      writable: true,
+      configurable: true
+    },
+    initControlsTest: {
+      value: function initControlsTest() {
+        var x = this.canvas;
+        return x;
+        // return new Promise((resolve) => {
+        //   var $target = $(this.target);
+        //   this.target.innerHTML = this.template;
+        //   $target.width(this.canvas.width);
+        //   this.$imagesList = $('#imagesListTemplate');
 
+
+        //   $target.on('click', '#imagesListTemplate', (ev) => {
+        //     if (ev.target.nodeName === "I"){
+        //       this.toggleImageVisibility(ev.target);
+        //       return resolve();
+        //     }
+
+        //   });
+
+        //   // let listElementsSelector = '.list-group-item';
+
+        //   // $target.delegate(listElementsSelector, 'drop', this._handleDrop);
+        //   // $target.delegate(listElementsSelector, 'dragstart', this._handleDragStart);
+        //   // $target.delegate(listElementsSelector, 'dragend', this._handleDragEnd);
+
+        //   resolve();
+        // })
       },
       writable: true,
       configurable: true
@@ -276,6 +299,15 @@ var UIController = (function () {
           output += li + "\n";
         });
         element.innerHTML = output;
+
+        this.imageListEvents();
+      },
+      writable: true,
+      configurable: true
+    },
+    imageListEvents: {
+      value: function imageListEvents() {
+        $(".list-group").sortable().bind("sortupdate", this._handleImageListReorganization);
       },
       writable: true,
       configurable: true
@@ -342,6 +374,9 @@ var UIController = (function () {
 
 
 
+// class SortableImageList {
+
+// }
 
 var image, c, ui;
 document.addEventListener("DOMContentLoaded", function (event) {

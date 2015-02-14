@@ -165,8 +165,7 @@ class UIController{
             </div>
             <ul id="imagesListTemplate" class="list-group">
             </ul>`;
-          this.canvas = options.canvas;
-          this.$imagesList = $('#imagesListTemplate');
+        this.canvas = options.canvas;
 
 
         this.initControls().then(() => {
@@ -179,6 +178,7 @@ class UIController{
         var $target = $(this.target);
         this.target.innerHTML = this.template;
         $target.width(this.canvas.width);
+        this.$imagesList = $('#imagesListTemplate');
         
 
         $target.on('click', '#imagesListTemplate', (ev) => {
@@ -188,15 +188,6 @@ class UIController{
           }
 
         });
-
-        this.$imagesList.sortable().bind('sortupdate', _handleImageListReorganization);
-        //     //Triggered when the user stopped sorting and the DOM position has changed.
-        //     debugger
-
-
-        // });
-
-
 
         // let listElementsSelector = '.list-group-item';
 
@@ -209,11 +200,38 @@ class UIController{
       
     }
 
-    _handleImageListReorganization(){
-      debugger;
-      this.$imagesList
+    _handleImageListReorganization(){  
+      var list = $('#imagesListTemplate');
+      var listOfOriginalIndices = list.find('li').map(  (i, e) => e.dataset.index );
+    }
 
+    initControlsTest(){
+      var x = this.canvas;
+      return x;
+      // return new Promise((resolve) => {
+      //   var $target = $(this.target);
+      //   this.target.innerHTML = this.template;
+      //   $target.width(this.canvas.width);
+      //   this.$imagesList = $('#imagesListTemplate');
+        
 
+      //   $target.on('click', '#imagesListTemplate', (ev) => {
+      //     if (ev.target.nodeName === "I"){
+      //       this.toggleImageVisibility(ev.target);
+      //       return resolve();
+      //     }
+
+      //   });
+
+      //   // let listElementsSelector = '.list-group-item';
+
+      //   // $target.delegate(listElementsSelector, 'drop', this._handleDrop);
+      //   // $target.delegate(listElementsSelector, 'dragstart', this._handleDragStart);
+      //   // $target.delegate(listElementsSelector, 'dragend', this._handleDragEnd);
+
+      //   resolve();
+      // })
+      
     }
 
     drawImagesList(imagesList, imagesListTemplateID = 'imagesListTemplate'){
@@ -227,7 +245,13 @@ class UIController{
                   </li>`;
         output += li + "\n";
       });
-      element.innerHTML = output;      
+      element.innerHTML = output; 
+
+      this.imageListEvents();     
+    }
+
+    imageListEvents(){
+      $('.list-group').sortable().bind('sortupdate', this._handleImageListReorganization);
     }
 
     toggleImageVisibility(eventTarget){
@@ -274,6 +298,9 @@ class UIController{
 }
 
 
+// class SortableImageList {
+
+// }
 
 var image, c, ui;
 document.addEventListener("DOMContentLoaded", function(event) { 
