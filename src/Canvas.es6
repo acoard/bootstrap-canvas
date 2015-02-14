@@ -27,7 +27,8 @@ class Canvas {
   //@todo / refactor - extend to a 'try/catch', and revert adding it to elements if it doesn't work.
    importImageToCanvas(imageHandler){
         var canvas = this.fabric;
-        this.elements.push(imageHandler);
+        //By using unshift, we have the newest elements FIRST, which helps with z-index layer logic.
+        this.elements.unshift(imageHandler);
         ui.drawImagesList(this.elements)
         
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
@@ -65,6 +66,11 @@ class Canvas {
 
    canvasClickHandler(ev){
     console.log(ev);
+   }
+
+   findImageByName(name){
+    let list = this.elements;
+    return list.filter( x => x.name === name)[0];
    }
 
 }
@@ -116,6 +122,7 @@ class ImageElementHandler {
 
 }
 
+
 class ImageHandler{
   constructor(imageElementHandler, file, name, canvas ){
     this.name = name;
@@ -131,9 +138,19 @@ class ImageHandler{
     this.canvas.render();
   }
 
-  setZIndex(index){
+  _setZIndex(index){
     this.fabric.moveTo(index);
   }
+
+  setLayer(layer){
+    //layer is like the opposite of z-index.
+    //layer 0 is the highest layer, as it's the top of the list
+    var highestZIndex = this.canvas.elements.length - 1;
+    var newZIndex = highestZIndex - layer;
+    this._setZIndex(newZIndex);
+
+  }
+
 }
 
 
@@ -200,38 +217,21 @@ class UIController{
       
     }
 
-    _handleImageListReorganization(){  
-      var list = $('#imagesListTemplate');
-      var listOfOriginalIndices = list.find('li').map(  (i, e) => e.dataset.index );
-    }
+    _handleImageListReorganization(e, ui){  
 
-    initControlsTest(){
-      var x = this.canvas;
-      return x;
-      // return new Promise((resolve) => {
-      //   var $target = $(this.target);
-      //   this.target.innerHTML = this.template;
-      //   $target.width(this.canvas.width);
-      //   this.$imagesList = $('#imagesListTemplate');
-        
-
-      //   $target.on('click', '#imagesListTemplate', (ev) => {
-      //     if (ev.target.nodeName === "I"){
-      //       this.toggleImageVisibility(ev.target);
-      //       return resolve();
-      //     }
-
-      //   });
-
-      //   // let listElementsSelector = '.list-group-item';
-
-      //   // $target.delegate(listElementsSelector, 'drop', this._handleDrop);
-      //   // $target.delegate(listElementsSelector, 'dragstart', this._handleDragStart);
-      //   // $target.delegate(listElementsSelector, 'dragend', this._handleDragEnd);
-
-      //   resolve();
-      // })
+      // var list = $('#imagesListTemplate');
+      // var listOfOriginalIndices = list.find('li').map(  (i, e) => e.dataset.index );
       
+      //todo:
+      //find the ImageHandler by the moved image
+      //  get string from DOM and filter by name?
+      // return this.canvas;
+      
+      var newPosition = ui.item.index();
+      var name = $(ui.item).find('.filename').text();
+      var imageElementObj = this.canvas.findImageByName(name);
+      imageElementObj.setLayer(newPosition);
+
     }
 
     drawImagesList(imagesList, imagesListTemplateID = 'imagesListTemplate'){
@@ -239,7 +239,7 @@ class UIController{
       var element = document.getElementById(imagesListTemplateID);
       imagesList.forEach(function(el, i){
         let li = `<li class="list-group-item" draggable="true" data-index=${i}>
-                    ${ el.name } 
+                    <span class='filename'>${ el.name }</span>
                     
                     <i class='close'>toggle</i> 
                   </li>`;
@@ -251,7 +251,7 @@ class UIController{
     }
 
     imageListEvents(){
-      $('.list-group').sortable().bind('sortupdate', this._handleImageListReorganization);
+      $('.list-group').sortable().bind('sortupdate', this._handleImageListReorganization.bind(this));
     }
 
     toggleImageVisibility(eventTarget){

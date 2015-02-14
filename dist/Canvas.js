@@ -43,7 +43,8 @@ var Canvas = (function () {
       //@todo / refactor - extend to a 'try/catch', and revert adding it to elements if it doesn't work.
       value: function importImageToCanvas(imageHandler) {
         var canvas = this.fabric;
-        this.elements.push(imageHandler);
+        //By using unshift, we have the newest elements FIRST, which helps with z-index layer logic.
+        this.elements.unshift(imageHandler);
         ui.drawImagesList(this.elements);
 
         var _calculateDrawingDefaultDimensions = this.calculateDrawingDefaultDimensions(imageHandler.img);
@@ -96,6 +97,16 @@ var Canvas = (function () {
     canvasClickHandler: {
       value: function canvasClickHandler(ev) {
         console.log(ev);
+      },
+      writable: true,
+      configurable: true
+    },
+    findImageByName: {
+      value: function findImageByName(name) {
+        var list = this.elements;
+        return list.filter(function (x) {
+          return x.name === name;
+        })[0];
       },
       writable: true,
       configurable: true
@@ -183,9 +194,20 @@ var ImageHandler = (function () {
       writable: true,
       configurable: true
     },
-    setZIndex: {
-      value: function setZIndex(index) {
+    _setZIndex: {
+      value: function _setZIndex(index) {
         this.fabric.moveTo(index);
+      },
+      writable: true,
+      configurable: true
+    },
+    setLayer: {
+      value: function setLayer(layer) {
+        //layer is like the opposite of z-index.
+        //layer 0 is the highest layer, as it's the top of the list
+        var highestZIndex = this.canvas.elements.length - 1;
+        var newZIndex = highestZIndex - layer;
+        this._setZIndex(newZIndex);
       },
       writable: true,
       configurable: true
@@ -249,42 +271,19 @@ var UIController = (function () {
       configurable: true
     },
     _handleImageListReorganization: {
-      value: function _handleImageListReorganization() {
-        var list = $("#imagesListTemplate");
-        var listOfOriginalIndices = list.find("li").map(function (i, e) {
-          return e.dataset.index;
-        });
-      },
-      writable: true,
-      configurable: true
-    },
-    initControlsTest: {
-      value: function initControlsTest() {
-        var x = this.canvas;
-        return x;
-        // return new Promise((resolve) => {
-        //   var $target = $(this.target);
-        //   this.target.innerHTML = this.template;
-        //   $target.width(this.canvas.width);
-        //   this.$imagesList = $('#imagesListTemplate');
+      value: function _handleImageListReorganization(e, ui) {
+        // var list = $('#imagesListTemplate');
+        // var listOfOriginalIndices = list.find('li').map(  (i, e) => e.dataset.index );
 
+        //todo:
+        //find the ImageHandler by the moved image
+        //  get string from DOM and filter by name?
+        // return this.canvas;
 
-        //   $target.on('click', '#imagesListTemplate', (ev) => {
-        //     if (ev.target.nodeName === "I"){
-        //       this.toggleImageVisibility(ev.target);
-        //       return resolve();
-        //     }
-
-        //   });
-
-        //   // let listElementsSelector = '.list-group-item';
-
-        //   // $target.delegate(listElementsSelector, 'drop', this._handleDrop);
-        //   // $target.delegate(listElementsSelector, 'dragstart', this._handleDragStart);
-        //   // $target.delegate(listElementsSelector, 'dragend', this._handleDragEnd);
-
-        //   resolve();
-        // })
+        var newPosition = ui.item.index();
+        var name = $(ui.item).find(".filename").text();
+        var imageElementObj = this.canvas.findImageByName(name);
+        imageElementObj.setLayer(newPosition);
       },
       writable: true,
       configurable: true
@@ -295,7 +294,7 @@ var UIController = (function () {
         var output = "";
         var element = document.getElementById(imagesListTemplateID);
         imagesList.forEach(function (el, i) {
-          var li = "<li class=\"list-group-item\" draggable=\"true\" data-index=" + i + ">\n                    " + el.name + " \n                    \n                    <i class='close'>toggle</i> \n                  </li>";
+          var li = "<li class=\"list-group-item\" draggable=\"true\" data-index=" + i + ">\n                    <span class='filename'>" + el.name + "</span>\n                    \n                    <i class='close'>toggle</i> \n                  </li>";
           output += li + "\n";
         });
         element.innerHTML = output;
@@ -307,7 +306,7 @@ var UIController = (function () {
     },
     imageListEvents: {
       value: function imageListEvents() {
-        $(".list-group").sortable().bind("sortupdate", this._handleImageListReorganization);
+        $(".list-group").sortable().bind("sortupdate", this._handleImageListReorganization.bind(this));
       },
       writable: true,
       configurable: true
