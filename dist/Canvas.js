@@ -231,8 +231,22 @@ var UIController = (function () {
           $target.on("click", "#imagesListTemplate", function (ev) {
             if (ev.target.nodeName === "I") {
               _this.toggleImageVisibility(ev.target);
+              return resolve();
             }
           });
+
+          $target.delegate(".list-group-item", "drop", _this._handleDrop);
+          $target.delegate(".list-group-item", "dragstart", _this._handleDragStart);
+
+          // var cols = document.querySelectorAll('#columns .column');
+          // [].forEach.call(cols, function(col) {
+          //   col.addEventListener('dragstart', handleDragStart, false);
+          //   col.addEventListener('dragenter', handleDragEnter, false)
+          //   col.addEventListener('dragover', handleDragOver, false);
+          //   col.addEventListener('dragleave', handleDragLeave, false);
+          //   col.addEventListener('drop', handleDrop, false);
+          //   col.addEventListener('dragend', handleDragEnd, false);
+          // });
 
           resolve();
         });
@@ -261,11 +275,46 @@ var UIController = (function () {
       },
       writable: true,
       configurable: true
+    },
+    _handleDrop: {
+      value: function _handleDrop(e) {
+        // this/e.target is current target element.
+
+        if (e.stopPropagation) {
+          e.stopPropagation(); // Stops some browsers from redirecting.
+        }
+
+        // Don't do anything if dropping the same column we're dragging.
+        if (this.dragSrcEl != this) {
+          // Set the source column's HTML to the HTML of the column we dropped on.
+          this.dragSrcEl.innerHTML = this.innerHTML;
+          this.innerHTML = e.dataTransfer.getData("text/html");
+        }
+
+        return false;
+      },
+      writable: true,
+      configurable: true
+    },
+    _handleDragStart: {
+      value: function _handleDragStart(e) {
+        debugger;
+        // Target (this) element is the source node.
+        e.target.style.opacity = "0.4";
+
+        this.dragSrcEl = e.target;
+
+        e.originalEvent.dataTransfer.effectAllowed = "move";
+        e.originalEvent.dataTransfer.setData("text/html", e.target.innerHTML);
+      },
+      writable: true,
+      configurable: true
     }
   });
 
   return UIController;
 })();
+
 
 
 

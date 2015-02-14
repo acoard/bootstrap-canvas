@@ -183,9 +183,23 @@ class UIController{
         $target.on('click', '#imagesListTemplate', (ev) => {
           if (ev.target.nodeName === "I"){
             this.toggleImageVisibility(ev.target);
+            return resolve();
           }
 
         });
+
+        $target.delegate('.list-group-item', 'drop', this._handleDrop);
+        $target.delegate('.list-group-item', 'dragstart', this._handleDragStart);
+
+        // var cols = document.querySelectorAll('#columns .column');
+        // [].forEach.call(cols, function(col) {
+        //   col.addEventListener('dragstart', handleDragStart, false);
+        //   col.addEventListener('dragenter', handleDragEnter, false)
+        //   col.addEventListener('dragover', handleDragOver, false);
+        //   col.addEventListener('dragleave', handleDragLeave, false);
+        //   col.addEventListener('drop', handleDrop, false);
+        //   col.addEventListener('dragend', handleDragEnd, false);
+        // });
 
         resolve();
       })
@@ -207,12 +221,35 @@ class UIController{
       this.canvas.elements[index].toggleVisibility()
     }
 
+    _handleDrop(e) {
+      // this/e.target is current target element.
 
+      if (e.stopPropagation) {
+        e.stopPropagation(); // Stops some browsers from redirecting.
+      }
 
+      // Don't do anything if dropping the same column we're dragging.
+      if (this.dragSrcEl != this) {
+        // Set the source column's HTML to the HTML of the column we dropped on.
+        this.dragSrcEl.innerHTML = this.innerHTML;
+        this.innerHTML = e.dataTransfer.getData('text/html');
+      }
 
+      return false;
+    }
 
+    _handleDragStart(e) {
+      debugger;
+      // Target (this) element is the source node.
+      e.target.style.opacity = '0.4';
 
+      this.dragSrcEl = e.target;
+
+      e.originalEvent.dataTransfer.effectAllowed = 'move';
+      e.originalEvent.dataTransfer.setData('text/html', e.target.innerHTML);
+    }
 }
+
 
 
 var image, c, ui;
