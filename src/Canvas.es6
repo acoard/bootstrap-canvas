@@ -45,7 +45,6 @@ class Canvas {
     var aspectRatio = imgWidth / imgHeight;
 
     if (imgWidth <= canvas.width / 2 && imgHeight <= canvas.height / 2){
-     // return {width: imgWidth, height: imgHeight};
        return [imgWidth, imgHeight]
     }
 
@@ -64,10 +63,7 @@ class Canvas {
      return [imgWidth, imgHeight]
    }
 
-   canvasClickHandler(ev){
-    console.log(ev);
-   }
-
+   //todo - refactor into an 'ImageCollection' object.
    findImageByName(name){
     let list = this.elements;
     return list.filter( x => x.name === name)[0];
@@ -203,28 +199,12 @@ class UIController{
           }
 
         });
-
-        // let listElementsSelector = '.list-group-item';
-
-        // $target.delegate(listElementsSelector, 'drop', this._handleDrop);
-        // $target.delegate(listElementsSelector, 'dragstart', this._handleDragStart);
-        // $target.delegate(listElementsSelector, 'dragend', this._handleDragEnd);
-
         resolve();
       })
       
     }
 
-    _handleImageListReorganization(e, ui){  
-
-      // var list = $('#imagesListTemplate');
-      // var listOfOriginalIndices = list.find('li').map(  (i, e) => e.dataset.index );
-      
-      //todo:
-      //find the ImageHandler by the moved image
-      //  get string from DOM and filter by name?
-      // return this.canvas;
-      
+    _handleImageListReorganization(e, ui){        
       var newPosition = ui.item.index();
       var name = $(ui.item).find('.filename').text();
       var imageElementObj = this.canvas.findImageByName(name);
@@ -248,6 +228,9 @@ class UIController{
       this.imageListEvents();     
     }
 
+
+    //This handles the <li> elements being dragable.
+    //Must rebind after every time drawImagesList() is called.
     imageListEvents(){
       $('.list-group').sortable().bind('sortupdate', this._handleImageListReorganization.bind(this));
     }
@@ -258,53 +241,8 @@ class UIController{
       var index = eventTarget['parentElement']['dataset']['index'];
       this.canvas.elements[index].toggleVisibility()
     }
-
-    _handleDrop(e) {
-      //Currently not getting in this function at all!
-
-      // We want the end result to be re-organizing  this.canvas.elements
-
-      if (e.stopPropagation) {
-        e.stopPropagation(); // Stops some browsers from redirecting.
-      }
-      debugger;
-
-      // Don't do anything if dropping the same column we're dragging.
-      if (this.dragSrcEl != this) {
-        // Set the source column's HTML to the HTML of the column we dropped on.
-        this.dragSrcEl.innerHTML = this.innerHTML;
-        this.innerHTML = e.dataTransfer.getData('text/html');
-        debugger;
-      }
-
-      return false;
-    }
-
-    _handleDragStart(e) {
-      // Target (this) element is the source node.
-      e.target.style.opacity = '0.4';
-
-      this.dragSrcEl = e.target;
-
-      e.originalEvent.dataTransfer.effectAllowed = 'move';
-      e.originalEvent.dataTransfer.setData('text/html', e.target.innerHTML);
-    }
-
-    _handleDragEnd(e){
-      e.target.style.opacity = '1';
-    }
 }
 
-//todo  - rename to Selection box
-class Box{
-    constructor(){
-        this.mySelBoxColor = 'darkred';
-        this.mySelBoxSize = 6;
-    }
-    draw (context, optionalColor) {
-       // ... (draw code) ...
-     }
-}
 
 // class SortableImageList {
 

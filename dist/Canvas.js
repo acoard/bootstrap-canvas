@@ -73,7 +73,6 @@ var Canvas = (function () {
         var aspectRatio = imgWidth / imgHeight;
 
         if (imgWidth <= canvas.width / 2 && imgHeight <= canvas.height / 2) {
-          // return {width: imgWidth, height: imgHeight};
           return [imgWidth, imgHeight];
         }
 
@@ -94,14 +93,9 @@ var Canvas = (function () {
       writable: true,
       configurable: true
     },
-    canvasClickHandler: {
-      value: function canvasClickHandler(ev) {
-        console.log(ev);
-      },
-      writable: true,
-      configurable: true
-    },
     findImageByName: {
+
+      //todo - refactor into an 'ImageCollection' object.
       value: function findImageByName(name) {
         var list = this.elements;
         return list.filter(function (x) {
@@ -257,13 +251,6 @@ var UIController = (function () {
               return resolve();
             }
           });
-
-          // let listElementsSelector = '.list-group-item';
-
-          // $target.delegate(listElementsSelector, 'drop', this._handleDrop);
-          // $target.delegate(listElementsSelector, 'dragstart', this._handleDragStart);
-          // $target.delegate(listElementsSelector, 'dragend', this._handleDragEnd);
-
           resolve();
         });
       },
@@ -272,14 +259,6 @@ var UIController = (function () {
     },
     _handleImageListReorganization: {
       value: function _handleImageListReorganization(e, ui) {
-        // var list = $('#imagesListTemplate');
-        // var listOfOriginalIndices = list.find('li').map(  (i, e) => e.dataset.index );
-
-        //todo:
-        //find the ImageHandler by the moved image
-        //  get string from DOM and filter by name?
-        // return this.canvas;
-
         var newPosition = ui.item.index();
         var name = $(ui.item).find(".filename").text();
         var imageElementObj = this.canvas.findImageByName(name);
@@ -305,6 +284,10 @@ var UIController = (function () {
       configurable: true
     },
     imageListEvents: {
+
+
+      //This handles the <li> elements being dragable.
+      //Must rebind after every time drawImagesList() is called.
       value: function imageListEvents() {
         $(".list-group").sortable().bind("sortupdate", this._handleImageListReorganization.bind(this));
       },
@@ -320,75 +303,14 @@ var UIController = (function () {
       },
       writable: true,
       configurable: true
-    },
-    _handleDrop: {
-      value: function _handleDrop(e) {
-        //Currently not getting in this function at all!
-
-        // We want the end result to be re-organizing  this.canvas.elements
-
-        if (e.stopPropagation) {
-          e.stopPropagation(); // Stops some browsers from redirecting.
-        }
-        debugger;
-
-        // Don't do anything if dropping the same column we're dragging.
-        if (this.dragSrcEl != this) {
-          // Set the source column's HTML to the HTML of the column we dropped on.
-          this.dragSrcEl.innerHTML = this.innerHTML;
-          this.innerHTML = e.dataTransfer.getData("text/html");
-          debugger;
-        }
-
-        return false;
-      },
-      writable: true,
-      configurable: true
-    },
-    _handleDragStart: {
-      value: function _handleDragStart(e) {
-        // Target (this) element is the source node.
-        e.target.style.opacity = "0.4";
-
-        this.dragSrcEl = e.target;
-
-        e.originalEvent.dataTransfer.effectAllowed = "move";
-        e.originalEvent.dataTransfer.setData("text/html", e.target.innerHTML);
-      },
-      writable: true,
-      configurable: true
-    },
-    _handleDragEnd: {
-      value: function _handleDragEnd(e) {
-        e.target.style.opacity = "1";
-      },
-      writable: true,
-      configurable: true
     }
   });
 
   return UIController;
 })();
 
-//todo  - rename to Selection box
-var Box = (function () {
-  function Box() {
-    _classCallCheck(this, Box);
 
-    this.mySelBoxColor = "darkred";
-    this.mySelBoxSize = 6;
-  }
 
-  _prototypeProperties(Box, null, {
-    draw: {
-      value: function draw(context, optionalColor) {},
-      writable: true,
-      configurable: true
-    }
-  });
-
-  return Box;
-})();
 
 // class SortableImageList {
 
@@ -402,4 +324,3 @@ document.addEventListener("DOMContentLoaded", function (event) {
   //c.importImageToCanvas(image.getImage() )
 });
 // resolve();
-// ... (draw code) ...
