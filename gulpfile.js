@@ -13,7 +13,7 @@ gulp.task('watch', function() {
     
 
 gulp.task("default", function () {
-  return gulp.src("src/*.es6")
+  return gulp.src(["src/*.es6")
   // .pipe(browserify())
     .pipe(to5())
     .pipe(rename(function(path){

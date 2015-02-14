@@ -235,18 +235,12 @@ var UIController = (function () {
             }
           });
 
-          $target.delegate(".list-group-item", "drop", _this._handleDrop);
-          $target.delegate(".list-group-item", "dragstart", _this._handleDragStart);
 
-          // var cols = document.querySelectorAll('#columns .column');
-          // [].forEach.call(cols, function(col) {
-          //   col.addEventListener('dragstart', handleDragStart, false);
-          //   col.addEventListener('dragenter', handleDragEnter, false)
-          //   col.addEventListener('dragover', handleDragOver, false);
-          //   col.addEventListener('dragleave', handleDragLeave, false);
-          //   col.addEventListener('drop', handleDrop, false);
-          //   col.addEventListener('dragend', handleDragEnd, false);
-          // });
+          var listElementsSelector = ".list-group-item";
+
+          $target.delegate(listElementsSelector, "drop", _this._handleDrop);
+          $target.delegate(listElementsSelector, "dragstart", _this._handleDragStart);
+          $target.delegate(listElementsSelector, "dragend", _this._handleDragEnd);
 
           resolve();
         });
@@ -260,7 +254,7 @@ var UIController = (function () {
         var output = "";
         var element = document.getElementById(imagesListTemplateID);
         imagesList.forEach(function (el, i) {
-          var li = "<li class=\"list-group-item\" draggable=\"true\" data-index=" + i + ">" + el.name + " <i class='close'>toggle</i> </li>";
+          var li = "<li class=\"list-group-item\" draggable=\"true\" data-index=" + i + ">\n                    " + el.name + " \n                    \n                    <i class='close'>toggle</i> \n                  </li>";
           output += li + "\n";
         });
         element.innerHTML = output;
@@ -270,6 +264,8 @@ var UIController = (function () {
     },
     toggleImageVisibility: {
       value: function toggleImageVisibility(eventTarget) {
+        //Get index from DOM to update JS obj.
+        //Keeping state (index) in DOM so that all this method needs is the event object.
         var index = eventTarget.parentElement.dataset.index;
         this.canvas.elements[index].toggleVisibility();
       },
@@ -278,17 +274,21 @@ var UIController = (function () {
     },
     _handleDrop: {
       value: function _handleDrop(e) {
-        // this/e.target is current target element.
+        //Currently not getting in this function at all!
+
+        // We want the end result to be re-organizing  this.canvas.elements
 
         if (e.stopPropagation) {
           e.stopPropagation(); // Stops some browsers from redirecting.
         }
+        debugger;
 
         // Don't do anything if dropping the same column we're dragging.
         if (this.dragSrcEl != this) {
           // Set the source column's HTML to the HTML of the column we dropped on.
           this.dragSrcEl.innerHTML = this.innerHTML;
           this.innerHTML = e.dataTransfer.getData("text/html");
+          debugger;
         }
 
         return false;
@@ -298,7 +298,6 @@ var UIController = (function () {
     },
     _handleDragStart: {
       value: function _handleDragStart(e) {
-        debugger;
         // Target (this) element is the source node.
         e.target.style.opacity = "0.4";
 
@@ -306,6 +305,13 @@ var UIController = (function () {
 
         e.originalEvent.dataTransfer.effectAllowed = "move";
         e.originalEvent.dataTransfer.setData("text/html", e.target.innerHTML);
+      },
+      writable: true,
+      configurable: true
+    },
+    _handleDragEnd: {
+      value: function _handleDragEnd(e) {
+        e.target.style.opacity = "1";
       },
       writable: true,
       configurable: true
