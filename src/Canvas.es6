@@ -72,7 +72,6 @@ class Canvas {
     let list = this.elements;
     return list.filter( x => x.name === name)[0];
    }
-
 }
 
 class ImageElementHandler {
@@ -121,7 +120,6 @@ class ImageElementHandler {
     
 
 }
-
 
 class ImageHandler{
   constructor(imageElementHandler, file, name, canvas ){
@@ -297,6 +295,16 @@ class UIController{
     }
 }
 
+//todo  - rename to Selection box
+class Box{
+    constructor(){
+        this.mySelBoxColor = 'darkred';
+        this.mySelBoxSize = 6;
+    }
+    draw (context, optionalColor) {
+       // ... (draw code) ...
+     }
+}
 
 // class SortableImageList {
 

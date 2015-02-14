@@ -370,8 +370,25 @@ var UIController = (function () {
   return UIController;
 })();
 
+//todo  - rename to Selection box
+var Box = (function () {
+  function Box() {
+    _classCallCheck(this, Box);
 
+    this.mySelBoxColor = "darkred";
+    this.mySelBoxSize = 6;
+  }
 
+  _prototypeProperties(Box, null, {
+    draw: {
+      value: function draw(context, optionalColor) {},
+      writable: true,
+      configurable: true
+    }
+  });
+
+  return Box;
+})();
 
 // class SortableImageList {
 
@@ -385,3 +402,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
   //c.importImageToCanvas(image.getImage() )
 });
 // resolve();
+// ... (draw code) ...
