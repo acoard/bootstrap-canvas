@@ -1,5 +1,3 @@
-import UIController from "./models/UIController";
-import ImageElementHandler from "./models/ImageElementHandler";
 import Canvas from "./models/Canvas";
 
 
