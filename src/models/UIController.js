@@ -58,7 +58,7 @@ class UIController{
     _handleImageListReorganization(e, ui){        
       var newPosition = ui.item.index();
       var name = $(ui.item).find('.filename').text();
-      var imageElementObj = this.canvas.findImageByName(name);
+      var imageElementObj = this.canvas.imageCollection.findImageByName(name);
       imageElementObj.setLayer(newPosition);
 
     }

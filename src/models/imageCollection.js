@@ -29,6 +29,10 @@ class ImageCollection extends Array{
         super.unshift(imageHandler);
     }
 
+    findImageByName(name){
+        return super.filter( x => x.name === name)[0];
+   }
+
 }
 
 module.exports = ImageCollection;
