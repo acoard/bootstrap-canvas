@@ -12,18 +12,15 @@ imageCollection[3] gets 4th item -- is this possible?
  */
 
 class ImageCollection extends Array{
-    // constructor(...args){
-    //     //using super has instantiated the array, 
-    //     //but for osme reason the args aren't getting passed in!
-    //      // 
-    //      super(...args);
-
-    // }
         constructor(args) { 
             super();
-            for (let i = args.length-1; i >= 0; i--){
-                this.addImage(args[i]);
+
+            if (args instanceof Array){
+                for (let i = args.length-1; i >= 0; i--){   
+                    this.addImage(args[i]);
+                }    
             }
+            
         }
 
 

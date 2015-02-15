@@ -90,7 +90,9 @@ class UIController{
       //Get index from DOM to update JS obj.
       //Keeping state (index) in DOM so that all this method needs is the event object.
       var index = eventTarget['parentElement']['dataset']['index'];
-      this.canvas.elements[index].toggleVisibility()
+      // this.canvas.elements[index].toggleVisibility()
+      this.canvas.imageCollection[index].toggleVisibility()
+      
     }
 }
 

@@ -1,4 +1,5 @@
 import UIController from "./UIController";
+import ImageCollection from "./imageCollection.js";
 
 class Canvas {
     
@@ -6,6 +7,7 @@ class Canvas {
         this.canvasElement = document.getElementById(idOfCanvas);
         this.ctx = this.canvasElement.getContext("2d");
         this.elements = [];
+        this.imageCollection = new ImageCollection();
         this.width = this.canvasElement.width;
         this.height = this.canvasElement.height;
         this.fabric = new fabric.Canvas(idOfCanvas);
@@ -24,8 +26,10 @@ class Canvas {
    importImageToCanvas(imageHandler){
         var canvas = this.fabric;
         //By using unshift, we have the newest elements FIRST, which helps with z-index layer logic.
-        this.elements.unshift(imageHandler);
-        this.ui.drawImagesList(this.elements)
+        // this.elements.unshift(imageHandler);
+        this.imageCollection.addImage(imageHandler);
+        // this.ui.drawImagesList(this.elements)
+        this.ui.drawImagesList(this.imageCollection);
         
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
         [imageHandler.fabric.width, imageHandler.fabric.height] = [defaultWidth, defaultHeight];
@@ -65,7 +69,8 @@ class Canvas {
 
    //todo - refactor into an 'ImageCollection' object.
    findImageByName(name){
-    let list = this.elements;
+    // let list = this.elements;
+    let list = this.imageCollection;
     return list.filter( x => x.name === name)[0];
    }
 }

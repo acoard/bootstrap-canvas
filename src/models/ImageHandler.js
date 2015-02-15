@@ -20,7 +20,7 @@ class ImageHandler{
   setLayer(layer){
     //layer is like the opposite of z-index.
     //layer 0 is the highest layer, as it's the top of the list
-    var highestZIndex = this.canvas.elements.length - 1;
+    var highestZIndex = this.canvas.imageCollection.length - 1;
     var newZIndex = highestZIndex - layer;
     this._setZIndex(newZIndex);
 
