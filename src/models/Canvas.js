@@ -1,5 +1,5 @@
-// UIController = require('UIController');
 import UIController from "./UIController";
+
 class Canvas {
     
    constructor(idOfCanvas){
@@ -20,11 +20,6 @@ class Canvas {
     this.fabric.renderAll();
    }
 
-   drawGreenSquare(){
-        this.ctx.fillStyle = 'green'
-        this.ctx.fillRect(10, 10, 100, 100);
-   }
-
   //@todo / refactor - extend to a 'try/catch', and revert adding it to elements if it doesn't work.
    importImageToCanvas(imageHandler){
         var canvas = this.fabric;
@@ -40,9 +35,6 @@ class Canvas {
         
    }
    
-
-
-
    calculateDrawingDefaultDimensions(image){
     var imgWidth = image.width;
     var imgHeight = image.height;
@@ -79,4 +71,3 @@ class Canvas {
 }
 
 module.exports = Canvas;
-
