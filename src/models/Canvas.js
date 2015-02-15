@@ -11,6 +11,7 @@ class Canvas {
         this.fabric = new fabric.Canvas(idOfCanvas);
         
         this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
+        this.ui = new UIController({canvas: this});
    }
 
    render(){

@@ -27,7 +27,6 @@ class UIController{
             <ul id="imagesListTemplate" class="list-group">
             </ul>`;
         this.canvas = options.canvas;
-        this.canvas.ui = this;
 
 
         this.initControls().then(() => {
