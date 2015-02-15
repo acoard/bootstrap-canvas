@@ -39,11 +39,19 @@ class Canvas {
         imageHandler.fabric.setCoords();
         
    }
+   
+
+
 
    calculateDrawingDefaultDimensions(image){
     var imgWidth = image.width;
     var imgHeight = image.height;
     var aspectRatio = imgWidth / imgHeight;
+    /**
+     * r=w/h
+     * w = rh
+     * h = w/r
+     */
 
     if (imgWidth <= canvas.width / 2 && imgHeight <= canvas.height / 2){
        return [imgWidth, imgHeight]
@@ -53,14 +61,13 @@ class Canvas {
     //should do another check for width and scale on aspect ratio!
     if (imgHeight > canvas.height / 2){
      imgHeight = canvas.height / 2;
-     imgWidth = imgHeight * aspectRatio;
+     imgWidth = imgHeight * aspectRatio; //w = hr
     }
     //we want to filter by height first, and only catch cases were width is STILL too long
     if (imgWidth > canvas.width / 2){
       imgWidth = canvas.width / 2;
-      imgHeight = imgWidth * aspectRatio;
+      imgHeight = imgWidth / aspectRatio; // h = w/r
     }
-
      return [imgWidth, imgHeight]
    }
 
@@ -71,22 +78,5 @@ class Canvas {
    }
 }
 
-
-
 module.exports = Canvas;
-
-//todo - inheirit other UI elements from this class, i.e. the 'list' - ListController
-
-
-// class SortableImageList {
-
-// }
-
-// var image, c, ui;
-// document.addEventListener("DOMContentLoaded", function(event) { 
-//     c = new Canvas('canvas');
-//     ui = new UIController({canvas: c});
-    
-//     //c.importImageToCanvas(image.getImage() )
-// });
 

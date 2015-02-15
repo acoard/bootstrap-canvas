@@ -3,8 +3,7 @@ import ImageElementHandler from "./models/ImageElementHandler";
 import Canvas from "./models/Canvas";
 
 
-// var image, c, ui;
 document.addEventListener("DOMContentLoaded", function(event) { 
-    window.c = new Canvas('canvas');
-    // ui = new UIController({canvas: c});
+    //This is the 'init', and also I've made canvas a global for dev.
+    window.canvas = new Canvas('canvas');
 });
