@@ -19,4 +19,9 @@
 - Exporting: Have ability to hook into a <form> somehow, provide base64 as something loseless.
 
 
+Thanks to,
+    jQuery
+    http://www.html5rocks.com/en/tutorials/dnd/basics/
+    6ot5
+
 
