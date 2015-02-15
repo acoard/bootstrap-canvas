@@ -67,7 +67,7 @@ gulp.task('build', ['clean'], function() {
 // });
 
 gulp.task('watch', function () {
-    gulp.watch("src/js/**/*.js", ['build', browserSync.reload]);
+    gulp.watch("src/**/*.js", ['build', browserSync.reload]);
     gulp.watch("src/*.html", ['build', browserSync.reload]);
 });
 
