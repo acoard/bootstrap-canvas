@@ -1,6 +1,6 @@
 class ImageCollection extends Array{
         constructor(args) { 
-            super();
+            super(); //Instantiate the array
 
             if (args instanceof Array){
                 for (let i = args.length-1; i >= 0; i--){   
