@@ -2,11 +2,15 @@
   "name": "es6Canvas",
   "version": "0.0.1",
   "description": "A convenient wrapper for Canvas and various common canvas uses, using all the new ES6 features.",
-  "main": ".",
+  "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/acoard/es6-canvas.git"
+  },
+  "author": "Adam Coard",
   "license": "ISC",
   "devDependencies": {
     "6to5ify": "^4.1.0",
