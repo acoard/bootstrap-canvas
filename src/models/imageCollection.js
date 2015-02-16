@@ -1,16 +1,3 @@
-//imageHandlerCollection
-/*
-
-imageCollection.findByName('name')
-imageCollection.addImage( imageHandler )
-
-imageCollection[3] gets 4th item -- is this possible?
-    I THINK IT IS USING SUPER!
-    partially working, just constructor now
-
-
- */
-
 class ImageCollection extends Array{
         constructor(args) { 
             super();

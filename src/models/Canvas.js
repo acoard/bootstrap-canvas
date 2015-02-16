@@ -25,10 +25,7 @@ class Canvas {
   //@todo / refactor - extend to a 'try/catch', and revert adding it to elements if it doesn't work.
    importImageToCanvas(imageHandler){
         var canvas = this.fabric;
-        //By using unshift, we have the newest elements FIRST, which helps with z-index layer logic.
-        // this.elements.unshift(imageHandler);
         this.imageCollection.addImage(imageHandler);
-        // this.ui.drawImagesList(this.elements)
         this.ui.drawImagesList(this.imageCollection);
         
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
@@ -44,6 +41,7 @@ class Canvas {
     var imgHeight = image.height;
     var aspectRatio = imgWidth / imgHeight;
     /**
+     * algebra for relationship between aspect ratio and width/height.
      * r=w/h
      * w = rh
      * h = w/r
@@ -65,13 +63,6 @@ class Canvas {
       imgHeight = imgWidth / aspectRatio; // h = w/r
     }
      return [imgWidth, imgHeight]
-   }
-
-   //todo - refactor into an 'ImageCollection' object.
-   findImageByName(name){
-    // let list = this.elements;
-    let list = this.imageCollection;
-    return list.filter( x => x.name === name)[0];
    }
 }
 
