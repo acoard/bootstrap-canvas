@@ -20,6 +20,18 @@ class ImageCollection extends Array{
         return super.filter( x => x.name === name)[0];
    }
 
+   toString(){
+        let output = '';
+        console.log(super);
+        // console.log(super[0])
+        for (let i = 0; i <= super.length; i++){
+            // output += super[i]['name'] + ', ';
+            console.log(super[i]);
+        }
+        return output;
+
+   }
+
 }
 
 module.exports = ImageCollection;
