@@ -41,7 +41,8 @@ class UIController{
         $('body').on('click', '#imagesListTemplate', (ev) => {
 
           if (ev.target.className.indexOf('duplicate') !== -1 ) {
-            console.log('duplicate');
+            this.duplicateImageEvent(ev.target);
+            return resolve();
 
           }
           if (ev.target.className.indexOf('toggleVisibility') !== -1 ) {
@@ -123,7 +124,10 @@ class UIController{
 
     toggleImageVisibility(eventTarget){
       this._findImageFromButtonClickEvent(eventTarget).toggleVisibility();
-      
+    }
+
+    duplicateImageEvent(eventTarget){
+      this._findImageFromButtonClickEvent(eventTarget).duplicateFile();
     }
 }
 

@@ -6,6 +6,13 @@ class ImageHandler{
     this.canvas = canvas;
 
     this.fabric = new fabric.Image(this.img);
+
+    this.canvas.importImageToCanvas(this);
+  }
+
+  duplicateFile(){
+    // constructor(this.imageElementHandler, this.img, this.name + "(duplicate)", this.canvas)
+    new ImageHandler(this.imageElementHandler, this.img, this.name + "(duplicate)", this.canvas);
   }
 
   toggleVisibility(){
