@@ -40,12 +40,12 @@ class UIController{
 
         $('body').on('click', '#imagesListTemplate', (ev) => {
 
-
           if (ev.target.className.indexOf('duplicate') !== -1 ) {
             console.log('duplicate');
 
           }
           if (ev.target.className.indexOf('toggleVisibility') !== -1 ) {
+            // this.toggleImageVisibility(ev.target);
             this.toggleImageVisibility(ev.target);
             return resolve();
           }
@@ -114,11 +114,15 @@ class UIController{
       $('.list-group').sortable().bind('sortupdate', this._handleImageListReorganization.bind(this));
     }
 
-    toggleImageVisibility(eventTarget){
+    _findImageFromButtonClickEvent(eventTarget){
       //Get index from DOM to update JS obj.
       //Keeping state (index) in DOM so that all this method needs is the event object.
       var index = eventTarget['parentElement']['parentElement']['dataset']['index'];
-      this.canvas.imageCollection[index].toggleVisibility()
+      return this.canvas.imageCollection[index];
+    }
+
+    toggleImageVisibility(eventTarget){
+      this._findImageFromButtonClickEvent(eventTarget).toggleVisibility();
       
     }
 }
