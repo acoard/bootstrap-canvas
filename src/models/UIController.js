@@ -13,7 +13,7 @@ class UIController{
               <input type='file' id='imageUpload' style='visibility: hidden; height: 0px' />
             </label>
 
-            <button class='btn btn-lg btn-default'>
+            <button id='submit' class='btn btn-lg btn-default'>
               <i class="fa fa-check"></i>Submit
             </button>
 
@@ -64,6 +64,10 @@ class UIController{
         .css('position','absolute')
         .css('top','0px')
         .css('right','-200px');  
+
+        $('body').on('click', '#submit', (ev) => {
+          window.location = this.canvas.fabric.toDataURL('png');
+        })
 
 
         resolve();
