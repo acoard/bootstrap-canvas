@@ -2,6 +2,8 @@
     <body>
     <head>
         <link rel="stylesheet" href="vendor/bootstrap-3.3.2-dist/css/bootstrap.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
         <script src="vendor/jquery.min.js"></script>
         <script src="vendor/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
         <script src="vendor/fabric.min.js"></script>
@@ -9,16 +11,58 @@
         
         <script src="app.js"></script>
     </head>
-        <canvas id="canvas" width="800" height="300">
+    <div id='es6Container' style='width: 800; height: 300'>
+        <canvas id="canvas" width="600" height="300">
             If you're seeing this, your browser doesn't support HTML canvas.
         </canvas>
+    </div>
 
         <hr>
         
 
-        <div data-canvasControlsTargetID='canvas'>
+        <div class='canvasControls' data-canvasControlsTargetID='canvas'>
         </div>
 
+<style>
+body {
+ padding: 100px;   
+ background: #efefef;
+}
+
+#es6Container {
+    position: relative;
+}
+
+canvas {
+ /*background: white;*/
+ border: 3px solid grey;
+}
+
+.canvasControls {
+    width: 607px; /*todo: set to be same as canvas in js*/
+    border-radius: 20px;
+    margin-top: 50px;
+    padding: 20px;
+    background: #f4f4f4;
+    border: 2px solid #ccc;
+}
+
+.filename {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+/*#imageListContainer {
+    max-width: 500px;
+    position: absolute;
+    top: 100px;
+    right: 0px;
+}*/
+
+</style>
 
 
 

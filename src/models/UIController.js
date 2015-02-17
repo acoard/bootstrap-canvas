@@ -8,24 +8,14 @@ class UIController{
             //RIGHT NOW: it's selecting by data-canvascontrolstargetid
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.template = `
-            <label class='imageUploadLabel btn btn-primary'> Upload Image
-              <input type='file' id='imageUpload' style='visibility: hidden' />
+            <label class='imageUploadLabel btn btn-primary'> 
+              <i class="fa fa-picture-o"></i>&nbsp;Upload Image
+              <input type='file' id='imageUpload' style='visibility: hidden; height: 0px' />
             </label>
-            <!-- 
-            <div class="btn-group" role="group" aria-label="...">
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default">Left</button>
-              </div>
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default">Middle</button>
-              </div>
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default">Right</button>
-              </div>
-              -->
-            </div>
-            <ul id="imagesListTemplate" class="list-group">
-            </ul>`;
+            <div id='imageListContainer' style='max-width: 500px'>
+              <h4 style='text-align: center'>Layers</h4>
+              <ul id="imagesListTemplate" class="list-group"></ul>
+            </div>`;
         this.canvas = options.canvas;
 
 
@@ -39,7 +29,7 @@ class UIController{
       return new Promise((resolve) => {
         var $target = $(this.target);
         this.target.innerHTML = this.template;
-        $target.width(this.canvas.width);
+        // $target.width(this.canvas.width);
         this.$imagesList = $('#imagesListTemplate');
         
 
@@ -48,8 +38,18 @@ class UIController{
             this.toggleImageVisibility(ev.target);
             return resolve();
           }
-
         });
+
+        // $('#imageListContainer').remove().insertAfter('canvas')
+        // $('#canvas').append('#imageListContainer')
+        $('#imageListContainer').detach().appendTo('#es6Container')
+        .css('max-width','385px')
+        .css('min-width', '385px')
+        .css('position','absolute')
+        .css('top','0px')
+        .css('right','-200px');  
+
+
         resolve();
       })
       

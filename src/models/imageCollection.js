@@ -22,12 +22,13 @@ class ImageCollection extends Array{
 
    toString(){
         let output = '';
-        console.log(super);
-        // console.log(super[0])
-        for (let i = 0; i <= super.length; i++){
-            // output += super[i]['name'] + ', ';
-            console.log(super[i]);
-        }
+        let delimiter = ', ';
+
+        super.forEach( (e, i) => {
+            output += e['name'] + delimiter;
+        });
+        output = output.slice(0, -delimiter.length); //remove the last delimiter
+        
         return output;
 
    }

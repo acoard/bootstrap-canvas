@@ -11,14 +11,18 @@ class Canvas {
         this.width = this.canvasElement.width;
         this.height = this.canvasElement.height;
         this.fabric = new fabric.Canvas(idOfCanvas);
+        this.fabric.backgroundColor = '#FFFFFF';
         
         this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
         this.ui = new UIController({canvas: this});
+
+
+        this.render();
    }
 
    render(){
-    this.fabric.setHeight(this.height);
-    this.fabric.setWidth(this.width);
+    // this.fabric.setHeight(this.height);
+    // this.fabric.setWidth(this.width);
     this.fabric.renderAll();
    }
 
