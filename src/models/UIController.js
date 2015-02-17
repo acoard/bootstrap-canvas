@@ -66,7 +66,7 @@ class UIController{
         .css('right','-200px');  
 
         $('body').on('click', '#submit', (ev) => {
-          window.location = this.canvas.fabric.toDataURL('png');
+          window.open( this.canvas.fabric.toDataURL('png') );
         })
 
 
