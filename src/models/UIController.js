@@ -8,10 +8,15 @@ class UIController{
             //RIGHT NOW: it's selecting by data-canvascontrolstargetid
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.template = `
-            <label class='imageUploadLabel btn btn-primary'> 
+            <label class='imageUploadLabel btn btn-primary btn-lg'> 
               <i class="fa fa-picture-o"></i>&nbsp;Upload Image
               <input type='file' id='imageUpload' style='visibility: hidden; height: 0px' />
             </label>
+
+            <button class='btn btn-lg btn-default'>
+              <i class="fa fa-check"></i>Submit
+            </button>
+
             <div id='imageListContainer' style='max-width: 500px'>
               <h4 style='text-align: center'>Layers</h4>
               <ul id="imagesListTemplate" class="list-group"></ul>
@@ -33,7 +38,7 @@ class UIController{
         this.$imagesList = $('#imagesListTemplate');
         
 
-        $target.on('click', '#imagesListTemplate', (ev) => {
+        $('body').on('click', '#imagesListTemplate', (ev) => {
           if (ev.target.nodeName === "I"){
             this.toggleImageVisibility(ev.target);
             return resolve();
@@ -70,7 +75,20 @@ class UIController{
         let li = `<li class="list-group-item" draggable="true" data-index=${i}>
                     <span class='filename'>${ el.name }</span>
                     
-                    <i class='close'>toggle</i> 
+                    <div class='row-controls'>
+                      <button class='btn btn-default'>
+                        <i class="fa fa-files-o"></i>
+                      </button>
+
+                      <button class='btn btn-default'>
+                        <i class="fa fa-toggle-on"></i>
+                      </button>
+
+                      <button class='btn btn-default'>
+                        <i class='fa fa-close'></i>
+                      </button>
+                    </div>
+
                   </li>`;
         output += li + "\n";
       });
