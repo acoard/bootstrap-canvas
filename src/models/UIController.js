@@ -39,9 +39,19 @@ class UIController{
         
 
         $('body').on('click', '#imagesListTemplate', (ev) => {
-          if (ev.target.nodeName === "I"){
+
+
+          if (ev.target.className.indexOf('duplicate') !== -1 ) {
+            console.log('duplicate');
+
+          }
+          if (ev.target.className.indexOf('toggleVisibility') !== -1 ) {
             this.toggleImageVisibility(ev.target);
             return resolve();
+          }
+          if (ev.target.className.indexOf('delete') !== -1 ) {
+            console.log('delete');
+
           }
         });
 
@@ -76,15 +86,15 @@ class UIController{
                     <span class='filename'>${ el.name }</span>
                     
                     <div class='row-controls'>
-                      <button class='btn btn-default'>
+                      <button class='btn btn-default duplicate'>
                         <i class="fa fa-files-o"></i>
                       </button>
 
-                      <button class='btn btn-default'>
+                      <button class='btn btn-default toggleVisibility'>
                         <i class="fa fa-toggle-on"></i>
                       </button>
 
-                      <button class='btn btn-default'>
+                      <button class='btn btn-default delete'>
                         <i class='fa fa-close'></i>
                       </button>
                     </div>
@@ -107,8 +117,7 @@ class UIController{
     toggleImageVisibility(eventTarget){
       //Get index from DOM to update JS obj.
       //Keeping state (index) in DOM so that all this method needs is the event object.
-      var index = eventTarget['parentElement']['dataset']['index'];
-      // this.canvas.elements[index].toggleVisibility()
+      var index = eventTarget['parentElement']['parentElement']['dataset']['index'];
       this.canvas.imageCollection[index].toggleVisibility()
       
     }
