@@ -33,5 +33,9 @@ class ImageHandler{
 
   }
 
+  remove(){
+    this.fabric.remove();    
+  }
+
 }
 module.exports = ImageHandler;
