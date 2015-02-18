@@ -1,3 +1,15 @@
+Installation steps:
+
+These are a bit murky, I did things with trial and error.  If you can make them any better, please submit a pull request!
+
+First we must install [Canvas requirements](https://www.npmjs.com/package/canvas).  The instructions are:
+
+1. Have brew installed, and install wget: `brew install wget`
+2. wget https://raw.githubusercontent.com/LearnBoost/node-canvas/master/install -O - | sh
+3. Now we can run `npm install`
+
+
+
 # Pre-launch checklist
     - Have dependency to Canvas figured out.  Gulp browserify 6to5?  Include in node module?
 
