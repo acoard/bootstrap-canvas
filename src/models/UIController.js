@@ -51,7 +51,8 @@ class UIController{
             return resolve();
           }
           if (ev.target.className.indexOf('delete') !== -1 ) {
-            console.log('delete');
+            this.deleteImage(ev.target);
+            return resolve();
 
           }
         });
@@ -132,6 +133,10 @@ class UIController{
 
     duplicateImageEvent(eventTarget){
       this._findImageFromButtonClickEvent(eventTarget).duplicateFile();
+    }
+
+    deleteImage(eventTarget){
+      this._findImageFromButtonClickEvent(eventTarget).remove(); 
     }
 }
 
