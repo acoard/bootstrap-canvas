@@ -34,7 +34,9 @@ class ImageHandler{
   }
 
   remove(){
-    this.fabric.remove();    
+    this.fabric.remove();
+    this.canvas.imageCollection.remove(this);
+    debugger;
   }
 
 }

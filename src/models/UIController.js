@@ -136,6 +136,8 @@ class UIController{
     }
 
     deleteImage(eventTarget){
+      //TERRIBLE HOTFIX, REFACTOR THIS OUT!
+      $(eventTarget.parentElement.parentElement).remove()
       this._findImageFromButtonClickEvent(eventTarget).remove(); 
     }
 }
