@@ -41,33 +41,34 @@ class Canvas {
    }
    
    calculateDrawingDefaultDimensions(image){
-    var imgWidth = image.width;
-    var imgHeight = image.height;
-    var aspectRatio = imgWidth / imgHeight;
-    /**
-     * algebra for relationship between aspect ratio and width/height.
-     * r=w/h
-     * w = rh
-     * h = w/r
-     */
+      var imgWidth = image.width;
+      var imgHeight = image.height;
+      var aspectRatio = imgWidth / imgHeight;
+      /**
+       * algebra for relationship between aspect ratio and width/height.
+       * r=w/h
+       * w = rh
+       * h = w/r
+       */
 
-    if (imgWidth <= canvas.width / 2 && imgHeight <= canvas.height / 2){
+      if (imgWidth <= canvas.width / 2 && imgHeight <= canvas.height / 2){
+         return [imgWidth, imgHeight]
+      }
+
+      //just calculating off height now.
+      //should do another check for width and scale on aspect ratio!
+      if (imgHeight > canvas.height / 2){
+       imgHeight = canvas.height / 2;
+       imgWidth = imgHeight * aspectRatio; //w = hr
+      }
+      //we want to filter by height first, and only catch cases were width is STILL too long
+      if (imgWidth > canvas.width / 2){
+        imgWidth = canvas.width / 2;
+        imgHeight = imgWidth / aspectRatio; // h = w/r
+      }
        return [imgWidth, imgHeight]
-    }
-
-    //just calculating off height now.
-    //should do another check for width and scale on aspect ratio!
-    if (imgHeight > canvas.height / 2){
-     imgHeight = canvas.height / 2;
-     imgWidth = imgHeight * aspectRatio; //w = hr
-    }
-    //we want to filter by height first, and only catch cases were width is STILL too long
-    if (imgWidth > canvas.width / 2){
-      imgWidth = canvas.width / 2;
-      imgHeight = imgWidth / aspectRatio; // h = w/r
-    }
-     return [imgWidth, imgHeight]
    }
+   
 }
 
 module.exports = Canvas;
