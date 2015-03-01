@@ -11,7 +11,6 @@ class ImageHandler{
   }
 
   duplicateFile(){
-    // constructor(this.imageElementHandler, this.img, this.name + "(duplicate)", this.canvas)
     new ImageHandler(this.imageElementHandler, this.img, this.name + "(duplicate)", this.canvas);
   }
 
@@ -34,7 +33,8 @@ class ImageHandler{
   }
 
   remove(){
-    this.fabric.remove();    
+    this.fabric.remove();
+    this.canvas.imageCollection.find
   }
 
 }
