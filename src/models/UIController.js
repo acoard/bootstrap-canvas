@@ -26,7 +26,6 @@ class UIController{
 
         this.initControls().then(() => {
           let image = new ImageElementHandler('imageUpload', this.canvas);
-          // this.canvas.importImageToCanvas(image.getImage() )
         });
     }
 

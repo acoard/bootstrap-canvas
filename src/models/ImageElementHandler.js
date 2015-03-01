@@ -28,8 +28,6 @@ class ImageElementHandler {
                 this.readFileAsync(ev.target.files[0]).then( (data) => {
                     var name = ev.target.files[0].name;
                     var img = new ImageHandler(this, data, name, this.canvas);
-                    // this.canvas.importImageToCanvas(img) //trying to move to ImageHandler constructor logic
-                    // resolve();
                 });
             }
             else {
