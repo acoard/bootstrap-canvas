@@ -36,26 +36,11 @@ class UIController{
         this.target.innerHTML = this.template;
         // $target.width(this.canvas.width);
         this.$imagesList = $('#imagesListTemplate');
-        
 
-        $('body').on('click', '#imagesListTemplate', (ev) => {
-
-          if (ev.target.className.indexOf('duplicate') !== -1 ) {
-            this.duplicateImageEvent(ev.target);
-            return resolve();
-
-          }
-          if (ev.target.className.indexOf('toggleVisibility') !== -1 ) {
-            // this.toggleImageVisibility(ev.target);
-            this.toggleImageVisibility(ev.target);
-            return resolve();
-          }
-          if (ev.target.className.indexOf('delete') !== -1 ) {
-            this.deleteImage(ev.target);
-            return resolve();
-
-          }
-        });
+        //We have to use .bind here to overwrite jQuery's use of bind.
+        this.$imagesList.on('click', '.duplicate', this.duplicateImageEvent.bind(this));
+        this.$imagesList.on('click', '.toggleVisibility', this.toggleImageVisibility.bind(this));
+        this.$imagesList.on('click', '.delete', this.deleteImage.bind(this));
 
         // $('#imageListContainer').remove().insertAfter('canvas')
         // $('#canvas').append('#imageListContainer')
@@ -127,16 +112,16 @@ class UIController{
       return this.canvas.imageCollection[index];
     }
 
-    toggleImageVisibility(eventTarget){
-      this._findImageFromButtonClickEvent(eventTarget).toggleVisibility();
+    toggleImageVisibility(ev){
+      this._findImageFromButtonClickEvent(ev.target).toggleVisibility();
     }
 
-    duplicateImageEvent(eventTarget){
-      this._findImageFromButtonClickEvent(eventTarget).duplicateFile();
+    duplicateImageEvent(ev){
+      this._findImageFromButtonClickEvent(ev.target).duplicateFile();
     }
 
-    deleteImage(eventTarget){
-      this._findImageFromButtonClickEvent(eventTarget).remove(); 
+    deleteImage(ev){
+      this._findImageFromButtonClickEvent(ev.target).remove(); 
     }
 }
 
