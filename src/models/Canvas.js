@@ -74,6 +74,11 @@ class Canvas {
       }
        return [imgWidth, imgHeight]
    }
+
+
+   convertToBasePng(){
+    return this.fabric.toDataURL('png');
+   }
    
 }
 

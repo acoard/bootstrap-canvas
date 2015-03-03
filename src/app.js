@@ -16,6 +16,21 @@ class API{
 
         window.canvas = this.canvas; //DEBUGGING
     }
+
+    // @TODO Make sure it actually attaches image data!
+    attachToForm(formSelector, inputName = ''){
+        var $form = $(formSelector);
+        var png = this.canvas.convertToBasePng();
+
+        //todo, verify that below works.
+        var input = `<input type='hidden' name='${inputName}' value=${png}>`;
+        console.log(input);
+
+        $form.submit( ev => {
+            $form.append(input);
+        });
+
+    }
 }
 
 
