@@ -2,8 +2,11 @@ import Canvas from "./models/Canvas";
 import ImageCollection from "./models/ImageCollection";
 
 class API{
-    constructor(divID){
-        this.$container = $('#' + divID);
+    constructor(options){
+
+        if (typeof options.target === "undefined") throw "Required property in option object missing: `target`";
+        
+        this.$container = $('#' + options.target);
 
         var canvasTemplate = `<canvas id="es6-bootstrap-canvas" width="600" height="300"></canvas>`
         this.$container.append(canvasTemplate);
@@ -16,7 +19,9 @@ class API{
 
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    window.api = new API('es6-bootstrap-container');
+    window.api = new API({
+        target: 'es6-bootstrap-container'
+    });
     //This is the 'init', and also I've made canvas a global for dev.
     // window.canvas = new Canvas('canvas');
     // window.ImageCollection = ImageCollection;
