@@ -1,5 +1,4 @@
 import Canvas from "./models/Canvas";
-import ImageCollection from "./models/ImageCollection";
 
 class API{
     constructor(options){
