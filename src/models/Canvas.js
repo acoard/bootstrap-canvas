@@ -26,17 +26,23 @@ class Canvas {
     this.fabric.renderAll();
    }
 
-  //@todo / refactor - extend to a 'try/catch', and revert adding it to elements if it doesn't work.
-   importImageToCanvas(imageHandler){
+
+    importImageToCanvas(imageHandler){
+      try {      
         var canvas = this.fabric;
         this.imageCollection.addImage(imageHandler);
         this.ui.drawImagesList(this.imageCollection);
-        
+
         var [defaultWidth, defaultHeight] = this.calculateDrawingDefaultDimensions(imageHandler.img);
         [imageHandler.fabric.width, imageHandler.fabric.height] = [defaultWidth, defaultHeight];
         canvas.add(imageHandler.fabric);
         imageHandler.fabric.center();
         imageHandler.fabric.setCoords();
+      }
+      catch(ex) {
+        imageHandler.remove();
+        throw {message: "Could not import image to canvas", exception: ex};
+      }
         
    }
    
