@@ -6,6 +6,12 @@ class ImageHandler{
     this.canvas = canvas;
 
     this.fabric = new fabric.Image(this.img);
+
+    this.canvas.importImageToCanvas(this);
+  }
+
+  duplicateFile(){
+    new ImageHandler(this.imageElementHandler, this.img, this.name + "(duplicate)", this.canvas);
   }
 
   toggleVisibility(){
@@ -24,6 +30,11 @@ class ImageHandler{
     var newZIndex = highestZIndex - layer;
     this._setZIndex(newZIndex);
 
+  }
+
+  remove(){
+    this.fabric.remove();
+    this.canvas.imageCollection.find
   }
 
 }

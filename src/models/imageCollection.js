@@ -20,6 +20,19 @@ class ImageCollection extends Array{
         return super.filter( x => x.name === name)[0];
    }
 
+   toString(){
+        let output = '';
+        let delimiter = ', ';
+
+        super.forEach( (e, i) => {
+            output += e['name'] + delimiter;
+        });
+        output = output.slice(0, -delimiter.length); //remove the last delimiter
+        
+        return output;
+
+   }
+
 }
 
 module.exports = ImageCollection;
