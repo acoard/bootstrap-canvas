@@ -18,7 +18,7 @@ class API{
     }
 
     // @TODO Make sure it actually attaches image data!
-    attachToForm(formSelector, inputName = ''){
+    attachToForm(formSelector, inputName = 'es6-bootstrap-canvas'){
         var $form = $(formSelector);
         var png = this.canvas.convertToBasePng();
 
@@ -29,7 +29,10 @@ class API{
         $form.submit( ev => {
             $form.append(input);
         });
+    }
 
+    ajax(url){
+        $.post(url, {'es6-bootstrap-canvas' : this.canvas.convertToBasePng() } )
     }
 }
 
