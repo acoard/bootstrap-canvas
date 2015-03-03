@@ -7,6 +7,13 @@ class UIController{
         //  target, i.e. how it selects the element (just use jquery?)
             //RIGHT NOW: it's selecting by data-canvascontrolstargetid
         this.target = $('div[data-canvascontrolstargetid]')[0];
+        this.canvas = options.canvas;
+        
+        // var controlsContainer = "<div class='canvasControls' data-canvasControlsTargetID='canvas'></div>";
+        // this.target = $(this.canvas.canvasElement).after(controlsContainer);
+        
+
+
         this.template = `
             <label class='imageUploadLabel btn btn-primary btn-lg'> 
               <i class="fa fa-picture-o"></i>&nbsp;Upload Image
@@ -21,7 +28,9 @@ class UIController{
               <h4 style='text-align: center'>Layers</h4>
               <ul id="imagesListTemplate" class="list-group"></ul>
             </div>`;
-        this.canvas = options.canvas;
+
+
+
 
 
         this.initControls().then(() => {
@@ -43,7 +52,7 @@ class UIController{
 
         // $('#imageListContainer').remove().insertAfter('canvas')
         // $('#canvas').append('#imageListContainer')
-        $('#imageListContainer').detach().appendTo('#es6Container')
+        $('#imageListContainer').detach().appendTo('#es6-bootstrap-container')
         .css('max-width','385px')
         .css('min-width', '385px')
         .css('position','absolute')
