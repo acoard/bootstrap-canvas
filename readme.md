@@ -1,3 +1,31 @@
+# Plan
+
+Start working on the end-dev API as a new module
+
+    API.js (find a better name, should be proj name)
+
+    Constructor:
+        - take an option object OR an id of canvas (will use defaults if just ID)
+
+    Public methods:
+        - attachToForm()
+            - requires: the form to attach to
+            - optional: the name of the field.
+            - Add an event-listener to the form's "submit" event, and it'll append to it automatically before it posts.
+
+
+
+
+
+* Improve the bootstrap controls. 
+    - Import from template files?
+    - Make the layers list properly "affix" to the right or left 
+    - Have the UI controls (layers) be optional from the API.
+* Exporting: Have ability to hook into a <form> somehow, provide base64 as something loseless.
+
+
+
+
 # Pre-launch checklist
     - Have dependency to Canvas figured out.  Gulp browserify 6to5?  Include in node module?
 
@@ -7,21 +35,10 @@
         * https://gist.github.com/learncodeacademy/bf04432597334190bef4
 
 
-# Plan
-
-- Start refactoring canvas to use the fabric element
-    - Wrap the Fabric classes with something abstract/generic?  Checkout their image manipulator.
-- Split classes into individual files and use modules to import them properly.
-- Automatically add bootstrap controls underneath
-    - Have some template files: ES6 templating?
-    - Bootstrapify the upload button.  Have each component be optional/compartmentalizable.
-    - Controls: Have things like rotate be toggle-able.
-- Exporting: Have ability to hook into a <form> somehow, provide base64 as something loseless.
-
 
 Thanks to,
     jQuery
     http://www.html5rocks.com/en/tutorials/dnd/basics/
-    6ot5
+    6to5 / Babel
 
 
