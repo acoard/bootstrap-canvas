@@ -31,8 +31,8 @@ class API{
         });
     }
 
-    ajax(url){
-        $.post(url, {'es6-bootstrap-canvas' : this.canvas.convertToBasePng() } )
+    ajax(url, name = 'es6-bootstrap-canvas'){
+        $.post(url, {name : this.canvas.convertToBasePng() } )
     }
 }
 
