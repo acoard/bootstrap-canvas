@@ -18,6 +18,8 @@ class API{
     }
 
     // @TODO Make sure it actually attaches image data!
+    // refactor: passing in a string that conforms to jQuery's selector API is weird.  
+    // Think of something better.
     attachToForm(formSelector, inputName = 'es6-bootstrap-canvas'){
         var $form = $(formSelector);
         var png = this.canvas.saveToPNG();
@@ -25,10 +27,9 @@ class API{
         //todo, verify that below works.
         var input = `<input type='hidden' name='${inputName}' value=${png}>`;
         console.log(input);
-
-        $form.submit( ev => {
-            $form.append(input);
-        });
+        
+        //todo: check if it exists first and clears - make sure no duplicates occur.
+        $form.append(input);
     }
 
     ajax(url, name = 'es6-bootstrap-canvas'){
