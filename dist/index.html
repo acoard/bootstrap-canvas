@@ -23,12 +23,22 @@
         <div class='canvasControls' data-canvasControlsTargetID='canvas'>
         </div>
 
-        <form id='demoForm'>
-            <label>Superpower: <input name='superpower' value='Laser Eyes.'></label>
 
-            <button type='submit'>Submit</button>
+        <div>
 
-        </form>
+            <div class='explanation'>
+                This is a form, you can attach to it by writing:
+
+                <pre>
+                    api.attachToForm('selector')
+                </pre>
+            </div>
+
+            <form id='demoForm'>
+                <label>Superpower: <input name='superpower' value='Laser Eyes.'></label>
+                <button type='submit'>Submit</button>
+            </form>
+        </div>
 
 <style>
 body {
