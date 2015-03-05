@@ -75,8 +75,7 @@ class Canvas {
        return [imgWidth, imgHeight]
    }
 
-
-   convertToBasePng(){
+   saveToPNG(){
     return this.fabric.toDataURL('png');
    }
    
