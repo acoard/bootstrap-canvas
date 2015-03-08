@@ -6,13 +6,17 @@ class API{
     constructor(options){
 
         if (typeof options.target === "undefined") throw "Required property in option object missing: `target`";
+
+        let DEFAULT_WIDTH = 900; //px
+        let DEFAULT_HEIGHT = 300; //px
+        let CANVAS_WIDTH_DIFFERENCE = 300; //diff between the container width and canvas width;
         
-        var width = options.width ? options.width : 900;
-        var height = options.height? options.height : 300;
+        var width = options.width ? options.width : DEFAULT_WIDTH;
+        var height = options.height? options.height : DEFAULT_HEIGHT;
 
         this.$container = $('#' + options.target);
 
-        var canvasWidth =  width - 300;
+        var canvasWidth =  width - CANVAS_WIDTH_DIFFERENCE;
         var canvasHeight = height;
 
         var canvasTemplate = `<canvas id="es6-bootstrap-canvas" width="${canvasWidth}" height="${canvasHeight}"></canvas>`
