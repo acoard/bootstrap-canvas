@@ -27,7 +27,7 @@ class API{
             'position' : 'relative',
         });
         this.canvas = new Canvas('es6-bootstrap-canvas');
-        this.ui = new UIController({canvas: this.canvas, container: this.$container, layerWidth: CANVAS_WIDTH_DIFFERENCE});
+        this.ui = new UIController({canvas: this.canvas, container: this.$container, layerWidth: CANVAS_WIDTH_DIFFERENCE, layerHeight: height});
 
         //todo, refactor this tight coupling out
         //right now it's needed for canvas.importImageToCanvas calling ui.drawImagesList
