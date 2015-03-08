@@ -13,11 +13,13 @@ class UIController{
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.canvas = options.canvas;
         
+        //.canvas-container is fabricjs container
         $('.canvas-container').after(`
-          <div id='imageListContainer' style='max-width: 500px'>
+          <div id='imageListContainer' style='float: right'>
               <h4 style='text-align: center'>Layers</h4>
               <ul id="imagesListTemplate" class="list-group"></ul>
-          </div>`);
+          </div>
+          <div class='clearfix'></div>`).css('float', 'left');
         
 
 
@@ -52,14 +54,16 @@ class UIController{
         this.$imagesList.on('click', '.toggleVisibility', this.toggleImageVisibility.bind(this));
         this.$imagesList.on('click', '.delete', this.deleteImage.bind(this));
 
+
+
         // $('#imageListContainer').remove().insertAfter('canvas')
         // $('#canvas').append('#imageListContainer')
-        $('#imageListContainer')//.detach().appendTo('#es6-bootstrap-container')
-        .css('max-width','385px')
-        .css('min-width', '385px')
-        .css('position','absolute')
-        .css('top','0px')
-        .css('right','-200px');  
+        // $('#imageListContainer')//.detach().appendTo('#es6-bootstrap-container')
+        // .css('max-width','385px')
+        // .css('min-width', '385px')
+        // .css('position','absolute')
+        // .css('top','0px')
+        // .css('right','-200px');  
 
         $('body').on('click', '#submit', (ev) => {
           window.open( this.canvas.fabric.toDataURL('png') );
