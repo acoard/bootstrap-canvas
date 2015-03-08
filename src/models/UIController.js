@@ -87,7 +87,7 @@ class UIController{
       var output = '';
       var element = document.getElementById(imagesListTemplateID);
       imagesList.forEach(function(el, i){
-        let li = `<li class="list-group-item" draggable="true" data-index=${i}>
+        let li = `<li class="list-group-item clearfix" draggable="true" data-index=${i}>
                     <span class='filename'>${ el.name }</span>
                     
                     <div class='row-controls'>
