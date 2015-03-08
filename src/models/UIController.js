@@ -5,15 +5,12 @@ class UIController{
         //options should include: 
         //  which view to load (@todo is there a es6 template import from file?)
         //  target, i.e. how it selects the element (just use jquery?)
-            //RIGHT NOW: it's selecting by data-canvascontrolstargetid
         
         this.container = options.container;
         this.container.append("<div class='canvasControls' data-canvasControlsTargetID='canvas'></div>");
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.canvas = options.canvas;
         
-        // var controlsContainer = "<div class='canvasControls' data-canvasControlsTargetID='canvas'></div>";
-        // this.target = $(this.canvas.canvasElement).after(controlsContainer);
         
 
 
