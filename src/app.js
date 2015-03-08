@@ -7,12 +7,15 @@ class API{
 
         if (typeof options.target === "undefined") throw "Required property in option object missing: `target`";
         
-        var width = options.width ? options.width : 600;
+        var width = options.width ? options.width : 900;
         var height = options.height? options.height : 300;
 
         this.$container = $('#' + options.target);
 
-        var canvasTemplate = `<canvas id="es6-bootstrap-canvas" width="${width}" height="${height}"></canvas>`
+        var canvasWidth =  width - 300;
+        var canvasHeight = height;
+
+        var canvasTemplate = `<canvas id="es6-bootstrap-canvas" width="${canvasWidth}" height="${canvasHeight}"></canvas>`
         this.$container.append(canvasTemplate);
         this.$container.css(
             {'margin-bottom' : '175px',
@@ -55,7 +58,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
     window.api = new API({
         target: 'es6-bootstrap-container',
         // defaults:
-        // width: 600,
-        // height: 300
     });
 });
