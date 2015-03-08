@@ -5,12 +5,21 @@ class UIController{
         //options should include: 
         //  which view to load (@todo is there a es6 template import from file?)
         //  target, i.e. how it selects the element (just use jquery?)
-            //RIGHT NOW: it's selecting by data-canvascontrolstargetid
+        //  
+        //  GOAL: make imagesListContainer ()
+        
+        this.container = options.container;
+        this.container.append("<div class='canvasControls' data-canvasControlsTargetID='canvas'></div>");
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.canvas = options.canvas;
         
-        // var controlsContainer = "<div class='canvasControls' data-canvasControlsTargetID='canvas'></div>";
-        // this.target = $(this.canvas.canvasElement).after(controlsContainer);
+        //.canvas-container is fabricjs container
+        $('.canvas-container').after(`
+          <div id='imageListContainer' style='float: right; width : ${options.layerWidth}; max-height: ${options.layerHeight}; overflow: scroll'>
+              <h4 style='text-align: center'>Layers</h4>
+              <ul id="imagesListTemplate" class="list-group"></ul>
+          </div>
+          <div class='clearfix'></div>`).css('float', 'left');
         
 
 
@@ -22,12 +31,7 @@ class UIController{
 
             <button id='submit' class='btn btn-lg btn-default'>
               <i class="fa fa-check"></i>Submit
-            </button>
-
-            <div id='imageListContainer' style='max-width: 500px'>
-              <h4 style='text-align: center'>Layers</h4>
-              <ul id="imagesListTemplate" class="list-group"></ul>
-            </div>`;
+            </button>`;
 
 
 
@@ -50,14 +54,16 @@ class UIController{
         this.$imagesList.on('click', '.toggleVisibility', this.toggleImageVisibility.bind(this));
         this.$imagesList.on('click', '.delete', this.deleteImage.bind(this));
 
+
+
         // $('#imageListContainer').remove().insertAfter('canvas')
         // $('#canvas').append('#imageListContainer')
-        $('#imageListContainer').detach().appendTo('#es6-bootstrap-container')
-        .css('max-width','385px')
-        .css('min-width', '385px')
-        .css('position','absolute')
-        .css('top','0px')
-        .css('right','-200px');  
+        // $('#imageListContainer')//.detach().appendTo('#es6-bootstrap-container')
+        // .css('max-width','385px')
+        // .css('min-width', '385px')
+        // .css('position','absolute')
+        // .css('top','0px')
+        // .css('right','-200px');  
 
         $('body').on('click', '#submit', (ev) => {
           window.open( this.canvas.fabric.toDataURL('png') );
@@ -81,7 +87,7 @@ class UIController{
       var output = '';
       var element = document.getElementById(imagesListTemplateID);
       imagesList.forEach(function(el, i){
-        let li = `<li class="list-group-item" draggable="true" data-index=${i}>
+        let li = `<li class="list-group-item clearfix" draggable="true" data-index=${i}>
                     <span class='filename'>${ el.name }</span>
                     
                     <div class='row-controls'>

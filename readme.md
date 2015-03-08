@@ -20,7 +20,7 @@ Must be installed (correct?) before anything in this repo.  After that, clone th
 
 Start working on the end-dev API as a new module
 
-    API.js (find a better name, should be proj name)
+    API.js (find a better name, should be proj name).  Thinking of 'Bootstrap Canvas'
 
     Constructor:
         - take an option object OR an id of canvas (will use defaults if just ID)
@@ -34,12 +34,15 @@ Start working on the end-dev API as a new module
 
 
 
+# Refactoring / Todo
 
 * Improve the bootstrap controls. 
     - Import from template files?
+        - AND CSS!  Don't be just doing it programmatically with jQuery.
     - Make the layers list properly "affix" to the right or left 
     - Have the UI controls (layers) be optional from the API.
-* Exporting: Have ability to hook into a <form> somehow, provide base64 as something loseless.
+* Exporting: Have ability to hook into a <form> somehow, provide base64 as something loseless. DONE
+
 
 
 
