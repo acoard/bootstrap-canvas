@@ -15,7 +15,7 @@ class UIController{
         
         //.canvas-container is fabricjs container
         $('.canvas-container').after(`
-          <div id='imageListContainer' style='float: right'>
+          <div id='imageListContainer' style='float: right; width : ${options.layerWidth}'>
               <h4 style='text-align: center'>Layers</h4>
               <ul id="imagesListTemplate" class="list-group"></ul>
           </div>

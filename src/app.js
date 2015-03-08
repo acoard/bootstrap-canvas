@@ -7,12 +7,13 @@ class API{
 
         if (typeof options.target === "undefined") throw "Required property in option object missing: `target`";
 
-        let DEFAULT_WIDTH = 900; //px
+        let DEFAULT_WIDTH = 800; //px
         let DEFAULT_HEIGHT = 300; //px
         let CANVAS_WIDTH_DIFFERENCE = 300; //diff between the container width and canvas width;
         
         var width = options.width ? options.width : DEFAULT_WIDTH;
         var height = options.height? options.height : DEFAULT_HEIGHT;
+
 
         this.$container = $('#' + options.target);
 
@@ -26,7 +27,7 @@ class API{
             'position' : 'relative',
         });
         this.canvas = new Canvas('es6-bootstrap-canvas');
-        this.ui = new UIController({canvas: this.canvas, container: this.$container});
+        this.ui = new UIController({canvas: this.canvas, container: this.$container, layerWidth: CANVAS_WIDTH_DIFFERENCE});
 
         //todo, refactor this tight coupling out
         //right now it's needed for canvas.importImageToCanvas calling ui.drawImagesList
