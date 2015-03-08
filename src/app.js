@@ -1,5 +1,7 @@
 import Canvas from "./models/Canvas";
+import UIController from "./models/UIController";
 
+// @todo - rename as 'BootstrapCanvas' and make a jQuery plugin
 class API{
     constructor(options){
 
@@ -13,6 +15,12 @@ class API{
         var canvasTemplate = `<canvas id="es6-bootstrap-canvas" width="${width}" height="${height}"></canvas>`
         this.$container.append(canvasTemplate);
         this.canvas = new Canvas('es6-bootstrap-canvas');
+        this.ui = new UIController({canvas: this.canvas});
+
+        //todo, refactor this tight coupling out
+        //right now it's needed for canvas.importImageToCanvas calling ui.drawImagesList
+        this.canvas.ui = this.ui; 
+
 
         window.canvas = this.canvas; //DEBUGGING
     }

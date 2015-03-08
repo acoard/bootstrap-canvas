@@ -1,4 +1,3 @@
-import UIController from "./UIController";
 import ImageCollection from "./imageCollection.js";
 
 class Canvas {
@@ -14,7 +13,7 @@ class Canvas {
         this.fabric.backgroundColor = '#FFFFFF';
         
         this.canvasElement.addEventListener('click', this.canvasClickHandler, false);
-        this.ui = new UIController({canvas: this});
+        // this.ui = new UIController({canvas: this});
 
 
         this.render();
