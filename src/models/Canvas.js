@@ -74,6 +74,10 @@ class Canvas {
       }
        return [imgWidth, imgHeight]
    }
+
+   saveToPNG(){
+    return this.fabric.toDataURL('png');
+   }
    
 }
 

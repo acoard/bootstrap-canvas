@@ -16,6 +16,25 @@ class API{
 
         window.canvas = this.canvas; //DEBUGGING
     }
+
+    // @TODO Make sure it actually attaches image data!
+    // refactor: passing in a string that conforms to jQuery's selector API is weird.  
+    // Think of something better.
+    attachToForm(formSelector, inputName = 'es6-bootstrap-canvas'){
+        var $form = $(formSelector);
+        var png = this.canvas.saveToPNG();
+
+        //todo, verify that below works.
+        var input = `<input type='hidden' name='${inputName}' value=${png}>`;
+        console.log(input);
+        
+        //todo: check if it exists first and clears - make sure no duplicates occur.
+        $form.append(input);
+    }
+
+    ajax(url, name = 'es6-bootstrap-canvas'){
+        $.post(url, {name : this.canvas.saveToPNG() } )
+    }
 }
 
 
@@ -27,7 +46,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
         // width: 600,
         // height: 300
     });
-    //This is the 'init', and also I've made canvas a global for dev.
-    // window.canvas = new Canvas('canvas');
-    // window.ImageCollection = ImageCollection;
 });
