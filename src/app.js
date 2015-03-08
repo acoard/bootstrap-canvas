@@ -14,8 +14,9 @@ class API{
 
         var canvasTemplate = `<canvas id="es6-bootstrap-canvas" width="${width}" height="${height}"></canvas>`
         this.$container.append(canvasTemplate);
+        this.$container.css('margin-bottom', '175px');
         this.canvas = new Canvas('es6-bootstrap-canvas');
-        this.ui = new UIController({canvas: this.canvas});
+        this.ui = new UIController({canvas: this.canvas, container: this.$container});
 
         //todo, refactor this tight coupling out
         //right now it's needed for canvas.importImageToCanvas calling ui.drawImagesList
