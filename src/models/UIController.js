@@ -5,12 +5,19 @@ class UIController{
         //options should include: 
         //  which view to load (@todo is there a es6 template import from file?)
         //  target, i.e. how it selects the element (just use jquery?)
+        //  
+        //  GOAL: make imagesListContainer ()
         
         this.container = options.container;
         this.container.append("<div class='canvasControls' data-canvasControlsTargetID='canvas'></div>");
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.canvas = options.canvas;
         
+        $('.canvas-container').after(`
+          <div id='imageListContainer' style='max-width: 500px'>
+              <h4 style='text-align: center'>Layers</h4>
+              <ul id="imagesListTemplate" class="list-group"></ul>
+          </div>`);
         
 
 
@@ -22,12 +29,7 @@ class UIController{
 
             <button id='submit' class='btn btn-lg btn-default'>
               <i class="fa fa-check"></i>Submit
-            </button>
-
-            <div id='imageListContainer' style='max-width: 500px'>
-              <h4 style='text-align: center'>Layers</h4>
-              <ul id="imagesListTemplate" class="list-group"></ul>
-            </div>`;
+            </button>`;
 
 
 
@@ -52,7 +54,7 @@ class UIController{
 
         // $('#imageListContainer').remove().insertAfter('canvas')
         // $('#canvas').append('#imageListContainer')
-        $('#imageListContainer').detach().appendTo('#es6-bootstrap-container')
+        $('#imageListContainer')//.detach().appendTo('#es6-bootstrap-container')
         .css('max-width','385px')
         .css('min-width', '385px')
         .css('position','absolute')
