@@ -14,7 +14,10 @@ class API{
 
         var canvasTemplate = `<canvas id="es6-bootstrap-canvas" width="${width}" height="${height}"></canvas>`
         this.$container.append(canvasTemplate);
-        this.$container.css('margin-bottom', '175px');
+        this.$container.css(
+            {'margin-bottom' : '175px',
+            'position' : 'relative',
+        });
         this.canvas = new Canvas('es6-bootstrap-canvas');
         this.ui = new UIController({canvas: this.canvas, container: this.$container});
 

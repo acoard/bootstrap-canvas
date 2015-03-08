@@ -9,8 +9,6 @@ class UIController{
         
         this.container = options.container;
         this.container.append("<div class='canvasControls' data-canvasControlsTargetID='canvas'></div>");
-
-
         this.target = $('div[data-canvascontrolstargetid]')[0];
         this.canvas = options.canvas;
         
