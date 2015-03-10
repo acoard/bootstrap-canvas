@@ -25,6 +25,7 @@ gulp.task('css', function(){
 gulp.task('build', ['clean'], function() {
     gulp.src('./src/index.html')
         .pipe(gulp.dest('./dist'));
+        gulp.start('css');
 
         browserify({
         entries: './src/app.js',
