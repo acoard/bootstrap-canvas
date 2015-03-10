@@ -122,7 +122,8 @@ class UIController{
     _findImageFromButtonClickEvent(eventTarget){
       //Get index from DOM to update JS obj.
       //Keeping state (index) in DOM so that all this method needs is the event object.
-      var index = eventTarget['parentElement']['parentElement']['dataset']['index'];
+      let el = $(eventTarget).closest("li[data-index]");
+      let index = el[0]['dataset']['index'];
       return this.canvas.imageCollection[index];
     }
 
