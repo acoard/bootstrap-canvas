@@ -17,6 +17,11 @@ gulp.task('clean', function(cb){
     rimraf('./dist', cb);
 });
 
+gulp.task('css', function(){
+    gulp.src('./src/*.css')
+    .pipe(gulp.dest('./dist'));
+})
+
 gulp.task('build', ['clean'], function() {
     gulp.src('./src/index.html')
         .pipe(gulp.dest('./dist'));
@@ -49,9 +54,10 @@ gulp.task('build', ['clean'], function() {
 gulp.task('watch', function () {
     gulp.watch("src/**/*.js", ['build', browserSync.reload]);
     gulp.watch("src/*.html", ['build', browserSync.reload]);
+    gulp.watch('src/*.css', ['css']);
 });
 
-gulp.task('serve', ['build', 'watch'], function () {
+gulp.task('serve', ['build', 'watch', 'css'], function () {
     browserSync({
         server: {
             baseDir: './dist'
