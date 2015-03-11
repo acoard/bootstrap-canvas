@@ -3,7 +3,7 @@ import UIController from "./models/UIController";
 
 // @todo - rename as 'BootstrapCanvas' and make a jQuery plugin
 class API{
-    constructor($, options){
+    constructor(options){
 
         if (typeof options.target === "undefined") throw "Required property in option object missing: `target`";
 
@@ -56,9 +56,19 @@ class API{
         $.post(url, {name : this.canvas.saveToPNG() } )
     }
 
-    //todo: Make sure that the format of the API takes arguments as
-    // jquerySelector, {options}
-    _attachTojQuery($){
+    //todo: 
+    //  1. Make sure that the format of the API takes arguments as
+    //     jquerySelector, {options}
+    //  
+    //  2. Find a way to properly pass in jQuery.
+    // 
+    _attachTojQuery($ = undefined){
+        
+        //THIS IF STATEMENT IS UNTESTED
+        if (typeof $ === undefined){
+            throw "Bootstrap Canvas needs jQuery to be loaded before being instantiated.  jQuery not found.";
+        }
+
         $.fn.bootstrapCanvas = function(){
             return this;
         }
@@ -68,13 +78,9 @@ class API{
 
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    (function ( $ ) {
-     
-        window.api = new API(jQuery, {
-            target: 'es6-bootstrap-container',
-        });
-     
-    }( jQuery ));
 
-   
+    window.api = new API({
+        target: 'es6-bootstrap-container',
+        // defaults:
+    });
 });
