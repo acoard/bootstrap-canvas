@@ -55,6 +55,14 @@ class API{
     ajax(url, name = 'es6-bootstrap-canvas'){
         $.post(url, {name : this.canvas.saveToPNG() } )
     }
+
+    //todo: Make sure that the format of the API takes arguments as
+    // jquerySelector, {options}
+    _attachTojQuery(){
+        $.fn.bootstrapCanvas = function(){
+            return true;       
+        }
+    }
 }
 
 
