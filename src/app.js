@@ -3,7 +3,7 @@ import UIController from "./models/UIController";
 
 // @todo - rename as 'BootstrapCanvas' and make a jQuery plugin
 class API{
-    constructor(options){
+    constructor($, options){
 
         if (typeof options.target === "undefined") throw "Required property in option object missing: `target`";
 
@@ -58,9 +58,9 @@ class API{
 
     //todo: Make sure that the format of the API takes arguments as
     // jquerySelector, {options}
-    _attachTojQuery(){
+    _attachTojQuery($){
         $.fn.bootstrapCanvas = function(){
-            return true;       
+            return this;
         }
     }
 }
@@ -68,8 +68,13 @@ class API{
 
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    window.api = new API({
-        target: 'es6-bootstrap-container',
-        // defaults:
-    });
+    (function ( $ ) {
+     
+        window.api = new API(jQuery, {
+            target: 'es6-bootstrap-container',
+        });
+     
+    }( jQuery ));
+
+   
 });
