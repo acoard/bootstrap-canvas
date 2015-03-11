@@ -79,6 +79,21 @@ class API{
 
 document.addEventListener("DOMContentLoaded", function(event) { 
 
+    /**
+     * IMMEDIATE NEXT STEPS:
+     *
+     * Change name to 'BootstrapCanvas'
+     * Change API to be more like Bootstraps
+     *     $('div').bootstrapCanvas() //call with defaults
+     *     $('div').bootstrapCanvas({width: 500, height: 500}) //set some vars.
+     *
+     *     Extra:
+     *     $('div').bootstrapCanvas('action') //executes action on pre-existing creation
+     *
+     * http://getbootstrap.com/javascript/
+     */
+
+
     window.api = new API({
         target: 'es6-bootstrap-container',
         // defaults:
