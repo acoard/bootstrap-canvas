@@ -1,8 +1,26 @@
+# Usage
+
+If you want to begin using this library, it's as simple as including `APP.JS` or `APP.MIN.JS` in your project. 
+
+The only requirement is that you have jQuery loaded before this library.  I used jQuery out of habit.  If this dependency annoys you let me know, and I can remove it in the few places it exists.
+
+
+# Contributing
+
+Contributing requires cloning the entire repo found here, and installingall of the dependencies:
+    * Fabric
+    * node-canvas
+
+Must be installed (correct?) before anything in this repo.  After that, clone the repo and `npm install`.
+
+
+
+
 # Plan
 
 Start working on the end-dev API as a new module
 
-    API.js (find a better name, should be proj name)
+    API.js (find a better name, should be proj name).  Thinking of 'Bootstrap Canvas'
 
     Constructor:
         - take an option object OR an id of canvas (will use defaults if just ID)
@@ -16,12 +34,15 @@ Start working on the end-dev API as a new module
 
 
 
+# Refactoring / Todo
 
 * Improve the bootstrap controls. 
     - Import from template files?
+        - AND CSS!  Don't be just doing it programmatically with jQuery.
     - Make the layers list properly "affix" to the right or left 
     - Have the UI controls (layers) be optional from the API.
-* Exporting: Have ability to hook into a <form> somehow, provide base64 as something loseless.
+* Exporting: Have ability to hook into a <form> somehow, provide base64 as something loseless. DONE
+
 
 
 

@@ -1,0 +1,34 @@
+body {
+ padding: 100px;   
+ background: #efefef;
+}
+
+#es6Container {
+    position: relative;
+}
+
+canvas {
+ /*background: white;*/
+ border: 3px solid grey;
+}
+
+.canvasControls {
+    width: 607px; /*todo: set to be same as canvas in js*/
+    border-radius: 20px;
+    margin-top: 50px;
+    padding: 20px;
+    background: #f4f4f4;
+    border: 2px solid #ccc;
+}
+
+.filename {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.row-controls {
+    float: right;
+}
